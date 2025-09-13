@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Sistema de Inventario TI</title>
+    <link rel="stylesheet" href="../css_general/variables.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Barra lateral -->
+        <aside class="sidebar" aria-label="Navegación principal">
+            <div class="sidebar-header">
+                <h2>Sistema de Inventario TI</h2>
+            </div>
+            <nav class="sidebar-nav" aria-label="Navegación principal">
+                <ul>
+                    <li class="nav-item active">
+                        <a href="#" aria-current="page">
+                            <span class="icon" aria-hidden="true">📊</span>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#">
+                            <span class="icon" aria-hidden="true">📦</span>
+                            <span>Inventario</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#">
+                            <span class="icon" aria-hidden="true">📋</span>
+                            <span>Reportes</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="logout-btn" class="logout-btn" aria-label="Cerrar sesión">
+                    <span class="icon" aria-hidden="true">⎋</span>
+                    <span>Cerrar sesión</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Contenido principal -->
+        <main class="main-content" id="main-content" tabindex="-1">
+            <header class="content-header">
+                <h1>Dashboard de Inventario TI</h1>
+                <div class="user-info">
+                    <span>Hola, <strong>Admin</strong></span>
+                    <span id="current-date"></span>
+                </div>
+            </header>
+
+            <!-- Resumen de estadísticas -->
+            <section class="stats-section" aria-labelledby="stats-heading">
+                <h2 id="stats-heading" class="visually-hidden">Resumen de estadísticas</h2>
+                <div class="stats-grid">
+                    <article class="stat-card">
+                        <div class="stat-icon" aria-hidden="true">💻</div>
+                        <div class="stat-info">
+                            <h3>Total Productos</h3>
+                            <span class="stat-value">245</span>
+                            <span class="stat-change positive">+12 desde ayer</span>
+                        </div>
+                    </article>
+                    <article class="stat-card">
+                        <div class="stat-icon" aria-hidden="true">⚠️</div>
+                        <div class="stat-info">
+                            <h3>Stock Bajo</h3>
+                            <span class="stat-value">12</span>
+                            <span class="stat-change">Necesitan atención</span>
+                        </div>
+                    </article>
+                    <article class="stat-card">
+                        <div class="stat-icon" aria-hidden="true">🔄</div>
+                        <div class="stat-info">
+                            <h3>Actualizados Hoy</h3>
+                            <span class="stat-value">8</span>
+                            <span class="stat-change">Productos modificados</span>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Secciones principales -->
+            <div class="content-grid">
+                <!-- Resumen de estado de inventario -->
+                <section class="card chart-card" aria-labelledby="inventory-status-heading">
+                    <header class="card-header">
+                        <h2 id="inventory-status-heading">Estado del Inventario</h2>
+                        <div class="card-actions">
+                            <button class="action-btn" aria-label="Opciones del gráfico">⋯</button>
+                        </div>
+                    </header>
+                    <div class="chart-container">
+                        <canvas id="inventoryStatusChart" aria-label="Gráfico de estado de inventario" role="img"></canvas>
+                    </div>
+                    <div class="chart-info">
+                        <p>Muestra el porcentaje de productos con stock suficiente vs. aquellos que necesitan reposición.</p>
+                    </div>
+                </section>
+
+                <!-- Productos agregados recientemente -->
+                <section class="card table-card" aria-labelledby="recent-products-heading">
+                    <header class="card-header">
+                        <h2 id="recent-products-heading">Productos recientes</h2>
+                        <div class="card-actions">
+                            <button class="action-btn" aria-label="Ver todos los productos">Ver todos</button>
+                        </div>
+                    </header>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <caption class="visually-hidden">Lista de productos agregados recientemente</caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Producto</th>
+                                    <th scope="col">Categoría</th>
+                                    <th scope="col">Stock</th>
+                                    <th scope="col">Fecha</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recent-products-body">
+                                <!-- Los datos se cargarán con JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Alertas de stock bajo -->
+                <section class="card table-card alert-card" aria-labelledby="low-stock-heading">
+                    <header class="card-header">
+                        <h2 id="low-stock-heading">Productos con stock bajo</h2>
+                        <div class="card-actions">
+                            <button class="action-btn primary" aria-label="Gestionar alertas de stock">Gestionar</button>
+                        </div>
+                    </header>
+                    <div class="info-message">
+                        <p>Productos con menos de 10 unidades en stock. Es necesario reponerlos pronto.</p>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <caption class="visually-hidden">Lista de productos con stock bajo</caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Producto</th>
+                                    <th scope="col">Stock Actual</th>
+                                    <th scope="col">Mínimo Requerido</th>
+                                    <th scope="col">Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="low-stock-body">
+                                <!-- Los datos se cargarán con JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Productos más movidos -->
+                <section class="card table-card" aria-labelledby="top-products-heading">
+                    <header class="card-header">
+                        <h2 id="top-products-heading">Productos más movidos</h2>
+                        <div class="card-actions">
+                            <button class="action-btn" aria-label="Ver estadísticas completas">Ver más</button>
+                        </div>
+                    </header>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <caption class="visually-hidden">Lista de productos más movidos</caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Producto</th>
+                                    <th scope="col">Categoría</th>
+                                    <th scope="col">Movimiento</th>
+                                    <th scope="col">Tendencia</th>
+                                </tr>
+                            </thead>
+                            <tbody id="top-products-body">
+                                <!-- Los datos se cargarán con JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

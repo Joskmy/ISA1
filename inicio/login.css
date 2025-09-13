@@ -1,0 +1,272 @@
+/* Importar variables globales */
+@import url('../css_general/variables.css');
+
+/* ===== Layout general ===== */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background: var(--primary-main);
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+/* ===== Contenedor de alertas ===== */
+#alert-container {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  z-index: 1000;
+  max-width: 400px;
+}
+
+/* ===== Tarjeta login ===== */
+.login-card {
+  background: var(--neutral-10);
+  padding: 2.5rem;
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  max-width: 380px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.logo {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+h1 {
+  color: var(--neutral-100);
+  font-size: var(--font-header-sm);
+  font-weight: var(--font-semibold);
+  margin: 0 0 0.5rem 0;
+}
+
+.subtitle {
+  font-size: var(--font-body-md);
+  color: var(--neutral-70);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ===== Formulario ===== */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+form > div {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: var(--font-body-md);
+  font-weight: var(--font-medium);
+  color: var(--neutral-90);
+  margin-bottom: 0.5rem;
+}
+
+input, select {
+  padding: 0.75rem;
+  border: 1px solid var(--neutral-40);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-body-md);
+  transition: all 0.2s ease;
+  background: var(--neutral-10);
+}
+
+input:focus, select:focus {
+  border-color: var(--primary-main);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--primary-focus);
+}
+
+input::placeholder {
+  color: var(--neutral-60);
+}
+
+.btn-primary {
+  background: var(--primary-main);
+  color: var(--neutral-10);
+  font-weight: var(--font-medium);
+  font-size: var(--font-body-md);
+  padding: var(--btn-padding-y) var(--btn-padding-x);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 0.5rem;
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+}
+
+.btn-primary:active {
+  background: var(--primary-pressed);
+  transform: translateY(1px);
+}
+
+/* ===== Sistema de Alertas ===== */
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-body-md);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  position: relative;
+  min-width: 320px;
+  max-width: 380px;
+  border-width: 1px;
+  border-style: solid;
+  animation: slideIn 0.3s ease-out;
+  box-sizing: border-box;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.alert .icon {
+  font-size: 1.25rem;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.alert .content {
+  flex: 1;
+  min-width: 0;
+}
+
+.alert .title {
+  font-weight: var(--font-semibold);
+  margin: 0 0 0.25rem 0;
+  line-height: 1.3;
+}
+
+.alert .message {
+  margin: 0;
+  line-height: 1.4;
+  opacity: 0.9;
+}
+
+.alert .close-btn {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+  transition: background-color 0.2s ease;
+  color: var(--neutral-100); /* Forzar color negro para el botón X */
+  flex-shrink: 0;
+  margin-left: 0.5rem;
+}
+
+.alert .close-btn:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Variantes de alertas */
+.alert.danger {
+  background-color: var(--danger-bg);
+  border-color: var(--danger-border);
+  color: var(--danger-main);
+}
+
+.alert.danger .icon::before {
+  content: "⚠";
+}
+
+.alert.success {
+  background-color: var(--success-bg);
+  border-color: var(--success-border);
+  color: var(--success-main);
+}
+
+.alert.success .icon::before {
+  content: "✓";
+}
+
+.alert.warning {
+  background-color: var(--warning-bg);
+  border-color: var(--warning-border);
+  color: var(--warning-main);
+}
+
+.alert.warning .icon::before {
+  content: "⚠";
+}
+
+.alert.info {
+  background-color: var(--info-bg);
+  border-color: var(--info-border);
+  color: var(--info-main);
+}
+
+.alert.info .icon::before {
+  content: "ⓘ";
+  color: var(--info-main); /* Icono en color de información */
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 480px) {
+  body {
+    padding: 0.5rem;
+  }
+
+  .login-card {
+    padding: 1.5rem;
+    max-width: 100%;
+  }
+
+  #alert-container {
+    top: 0.5rem;
+    right: 0.5rem;
+    left: 0.5rem;
+    max-width: none;
+  }
+
+  .alert {
+    min-width: auto;
+    max-width: none;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .logo {
+    font-size: 2.5rem;
+  }
+}

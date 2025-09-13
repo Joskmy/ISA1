@@ -1,0 +1,421 @@
+/* Estilos generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: var(--neutral-20);
+    color: var(--neutral-100);
+    line-height: 1.5;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Contenedor principal del dashboard */
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Barra lateral */
+.sidebar {
+    width: 280px;
+    background-color: var(--neutral-10);
+    border-right: 1px solid var(--neutral-30);
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 0;
+    position: fixed;
+    height: 100vh;
+    z-index: 100;
+}
+
+.sidebar-header {
+    padding: 0 1.5rem 1.5rem;
+    border-bottom: 1px solid var(--neutral-30);
+    margin-bottom: 1.5rem;
+}
+
+.sidebar-header h2 {
+    font-size: var(--font-header-sm);
+    font-weight: var(--font-semibold);
+    color: var(--primary-main);
+}
+
+.sidebar-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-item {
+    margin-bottom: 0.25rem;
+}
+
+.nav-item a {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    color: var(--neutral-80);
+    transition: all 0.2s ease;
+    gap: 0.75rem;
+}
+
+.nav-item a:hover {
+    background-color: var(--primary-bg);
+    color: var(--primary-main);
+}
+
+.nav-item.active a {
+    background-color: var(--primary-bg);
+    color: var(--primary-main);
+    border-right: 3px solid var(--primary-main);
+    font-weight: var(--font-medium);
+}
+
+.sidebar-footer {
+    margin-top: auto;
+    padding: 1.5rem;
+    border-top: 1px solid var(--neutral-30);
+}
+
+.logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.75rem;
+    background-color: transparent;
+    border: 1px solid var(--neutral-40);
+    border-radius: var(--radius-sm);
+    color: var(--neutral-80);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.logout-btn:hover {
+    background-color: var(--neutral-20);
+}
+
+/* Contenido principal */
+.main-content {
+    flex: 1;
+    margin-left: 280px;
+    padding: 2rem;
+}
+
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.content-header h1 {
+    font-size: var(--font-header-md);
+    font-weight: var(--font-semibold);
+    color: var(--neutral-100);
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    color: var(--neutral-70);
+    font-size: var(--font-body-md);
+}
+
+/* Sección de estadísticas */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background-color: var(--neutral-10);
+    border-radius: 8px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.stat-icon {
+    font-size: 2.5rem;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-bg);
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover .stat-icon {
+    transform: scale(1.1);
+}
+
+.stat-info h3 {
+    font-size: var(--font-body-md);
+    font-weight: var(--font-medium);
+    color: var(--neutral-70);
+    margin-bottom: 0.25rem;
+}
+
+.stat-value {
+    display: block;
+    font-size: var(--font-header-md);
+    font-weight: var(--font-semibold);
+    color: var(--neutral-100);
+    margin-bottom: 0.25rem;
+}
+
+.stat-change {
+    font-size: var(--font-body-sm);
+}
+
+.stat-change.positive {
+    color: var(--success-main);
+}
+
+/* Grid de contenido */
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+.card {
+    background-color: var(--neutral-10);
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--neutral-30);
+}
+
+.card-header h2 {
+    font-size: var(--font-header-sm);
+    font-weight: var(--font-semibold);
+}
+
+.card-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: var(--radius-sm);
+    color: var(--neutral-70);
+    font-size: var(--font-body-md);
+    transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+    background-color: var(--neutral-20);
+}
+
+.action-btn.primary {
+    background-color: var(--primary-main);
+    color: var(--neutral-10);
+    padding: 0.5rem 1rem;
+}
+
+.action-btn.primary:hover {
+    background-color: var(--primary-hover);
+}
+
+.chart-container {
+    padding: 1.5rem;
+    height: 250px;
+    position: relative;
+}
+
+.chart-info {
+    padding: 0 1.5rem 1.5rem;
+    font-size: var(--font-body-sm);
+    color: var(--neutral-70);
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+    padding: 0.75rem 1.5rem;
+    text-align: left;
+}
+
+.data-table thead th {
+    background-color: var(--neutral-20);
+    font-weight: var(--font-semibold);
+    font-size: var(--font-body-sm);
+    color: var(--neutral-70);
+}
+
+.data-table tbody tr {
+    border-bottom: 1px solid var(--neutral-30);
+    transition: background-color 0.2s ease;
+}
+
+.data-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.data-table tbody tr:hover {
+    background-color: var(--neutral-20);
+}
+
+.alert-card {
+    border-left: 4px solid var(--warning-main);
+}
+
+.info-message {
+    padding: 1rem 1.5rem;
+    background-color: var(--warning-bg);
+    color: var(--warning-main);
+    font-size: var(--font-body-sm);
+}
+
+/* Mejoras de usabilidad para gráficos */
+.chart-legend {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--font-body-sm);
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+/* Badges para estados */
+.badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-size: var(--font-body-sm);
+    font-weight: var(--font-medium);
+}
+
+.badge.danger {
+    background-color: var(--danger-bg);
+    color: var(--danger-main);
+}
+
+.badge.warning {
+    background-color: var(--warning-bg);
+    color: var(--warning-main);
+}
+
+/* Indicadores de tendencia */
+.trend {
+    font-weight: bold;
+}
+
+.trend.success {
+    color: var(--success-main);
+}
+
+.trend.danger {
+    color: var(--danger-main);
+}
+
+.trend.neutral {
+    color: var(--neutral-70);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 70px;
+        padding: 1rem 0;
+    }
+    
+    .sidebar-header,
+    .sidebar-nav span,
+    .sidebar-footer span {
+        display: none;
+    }
+    
+    .sidebar-nav a,
+    .logout-btn {
+        justify-content: center;
+        padding: 0.75rem;
+    }
+    
+    .main-content {
+        margin-left: 70px;
+        padding: 1rem;
+    }
+    
+    .content-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .user-info {
+        align-items: flex-start;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
