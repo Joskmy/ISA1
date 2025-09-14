@@ -6,39 +6,37 @@
     <title>Dashboard - Sistema de Inventario TI</title>
     <link rel="stylesheet" href="../css_general/variables.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 </head>
 <body>
     <div class="dashboard-container">
         <!-- Barra lateral -->
         <aside class="sidebar" aria-label="Navegación principal">
             <div class="sidebar-header">
+                <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Contraer/expandir barra lateral">
+                    <i class="bi bi-chevron-left toggle-icon" aria-hidden="true"></i>
+                </button>
                 <h2>Sistema de Inventario TI</h2>
             </div>
             <nav class="sidebar-nav" aria-label="Navegación principal">
                 <ul>
                     <li class="nav-item active">
                         <a href="#" aria-current="page">
-                            <span class="icon" aria-hidden="true">📊</span>
+                            <i class="bi bi-speedometer2 icon" aria-hidden="true"></i>
                             <span>Dashboard</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#">
-                            <span class="icon" aria-hidden="true">📦</span>
+                        <a href="../inventario/inventario.html">
+                            <i class="bi bi-box-seam icon" aria-hidden="true"></i>
                             <span>Inventario</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#">
-                            <span class="icon" aria-hidden="true">📋</span>
-                            <span>Reportes</span>
                         </a>
                     </li>
                 </ul>
             </nav>
             <div class="sidebar-footer">
                 <button id="logout-btn" class="logout-btn" aria-label="Cerrar sesión">
-                    <span class="icon" aria-hidden="true">⎋</span>
+                    <i class="bi bi-box-arrow-right icon" aria-hidden="true"></i>
                     <span>Cerrar sesión</span>
                 </button>
             </div>
@@ -50,7 +48,10 @@
                 <h1>Dashboard de Inventario TI</h1>
                 <div class="user-info">
                     <span>Hola, <strong>Admin</strong></span>
-                    <span id="current-date"></span>
+                    <time id="current-date" datetime=""></time>
+                    <button id="profile-avatar-btn" class="profile-avatar-btn" aria-label="Ir al perfil">
+                        <i class="bi bi-person-circle avatar-icon" aria-hidden="true"></i>
+                    </button>
                 </div>
             </header>
 
@@ -58,24 +59,24 @@
             <section class="stats-section" aria-labelledby="stats-heading">
                 <h2 id="stats-heading" class="visually-hidden">Resumen de estadísticas</h2>
                 <div class="stats-grid">
-                    <article class="stat-card">
-                        <div class="stat-icon" aria-hidden="true">💻</div>
+                    <article class="stat-card success" role="button" tabindex="0" aria-label="Ver total de productos en inventario">
+                        <i class="bi bi-laptop stat-icon" aria-hidden="true"></i>
                         <div class="stat-info">
                             <h3>Total Productos</h3>
                             <span class="stat-value">245</span>
                             <span class="stat-change positive">+12 desde ayer</span>
                         </div>
                     </article>
-                    <article class="stat-card">
-                        <div class="stat-icon" aria-hidden="true">⚠️</div>
+                    <article class="stat-card warning" role="button" tabindex="0" aria-label="Ver productos con stock bajo en inventario">
+                        <i class="bi bi-exclamation-triangle stat-icon" aria-hidden="true"></i>
                         <div class="stat-info">
                             <h3>Stock Bajo</h3>
                             <span class="stat-value">12</span>
                             <span class="stat-change">Necesitan atención</span>
                         </div>
                     </article>
-                    <article class="stat-card">
-                        <div class="stat-icon" aria-hidden="true">🔄</div>
+                    <article class="stat-card info" role="button" tabindex="0" aria-label="Ver productos actualizados hoy en inventario">
+                        <i class="bi bi-arrow-repeat stat-icon" aria-hidden="true"></i>
                         <div class="stat-info">
                             <h3>Actualizados Hoy</h3>
                             <span class="stat-value">8</span>
@@ -92,15 +93,17 @@
                     <header class="card-header">
                         <h2 id="inventory-status-heading">Estado del Inventario</h2>
                         <div class="card-actions">
-                            <button class="action-btn" aria-label="Opciones del gráfico">⋯</button>
+                            <button class="action-btn primary" aria-label="Opciones del gráfico">
+                                <i class="bi bi-three-dots" aria-hidden="true"></i>
+                            </button>
                         </div>
                     </header>
-                    <div class="chart-container">
+                    <figure class="chart-container">
                         <canvas id="inventoryStatusChart" aria-label="Gráfico de estado de inventario" role="img"></canvas>
-                    </div>
-                    <div class="chart-info">
-                        <p>Muestra el porcentaje de productos con stock suficiente vs. aquellos que necesitan reposición.</p>
-                    </div>
+                        <figcaption class="chart-info">
+                            <p>Muestra el porcentaje de productos con stock suficiente vs. aquellos que necesitan reposición.</p>
+                        </figcaption>
+                    </figure>
                 </section>
 
                 <!-- Productos agregados recientemente -->
@@ -108,7 +111,10 @@
                     <header class="card-header">
                         <h2 id="recent-products-heading">Productos recientes</h2>
                         <div class="card-actions">
-                            <button class="action-btn" aria-label="Ver todos los productos">Ver todos</button>
+                            <button class="action-btn primary" aria-label="Ver todos los productos">
+                                <i class="bi bi-eye" aria-hidden="true"></i>
+                                Ver todos
+                            </button>
                         </div>
                     </header>
                     <div class="table-container">
@@ -134,7 +140,10 @@
                     <header class="card-header">
                         <h2 id="low-stock-heading">Productos con stock bajo</h2>
                         <div class="card-actions">
-                            <button class="action-btn primary" aria-label="Gestionar alertas de stock">Gestionar</button>
+                            <button class="action-btn primary" aria-label="Gestionar alertas de stock">
+                                <i class="bi bi-gear" aria-hidden="true"></i>
+                                Gestionar
+                            </button>
                         </div>
                     </header>
                     <div class="info-message">
@@ -163,7 +172,10 @@
                     <header class="card-header">
                         <h2 id="top-products-heading">Productos más movidos</h2>
                         <div class="card-actions">
-                            <button class="action-btn" aria-label="Ver estadísticas completas">Ver más</button>
+                            <button class="action-btn primary" aria-label="Ver estadísticas completas">
+                                <i class="bi bi-bar-chart" aria-hidden="true"></i>
+                                Ver más
+                            </button>
                         </div>
                     </header>
                     <div class="table-container">
@@ -173,7 +185,6 @@
                                 <tr>
                                     <th scope="col">Producto</th>
                                     <th scope="col">Categoría</th>
-                                    <th scope="col">Movimiento</th>
                                     <th scope="col">Tendencia</th>
                                 </tr>
                             </thead>

@@ -46,6 +46,7 @@ body {
   font-size: 3rem;
   display: block;
   margin-bottom: 0.75rem;
+  color: var(--primary-main);
 }
 
 h1 {

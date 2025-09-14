@@ -36,6 +36,7 @@ class InventoryDashboard {
     init() {
         this.setupEventListeners();
         this.loadData();
+        this.initSidebarState();
         this.setupKeyboardNavigation();
         this.setupLiveRegion();
     }
@@ -52,6 +53,18 @@ class InventoryDashboard {
                     this.handleLogout();
                 }
             });
+        }
+
+        // Profile avatar
+        const profileAvatarBtn = document.getElementById('profile-avatar-btn');
+        if (profileAvatarBtn) {
+            profileAvatarBtn.addEventListener('click', () => this.goToProfile());
+        }
+
+        // Sidebar toggle
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        if (sidebarToggle) {
+            sidebarToggle.addEventListener('click', () => this.toggleSidebar());
         }
 
         // Navegación por teclado en la barra lateral
@@ -84,6 +97,18 @@ class InventoryDashboard {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     this.handleActionButton(e);
+                }
+            });
+        });
+
+        // Tarjetas de estadísticas
+        const statCards = document.querySelectorAll('.stat-card');
+        statCards.forEach(card => {
+            card.addEventListener('click', () => this.goToInventory());
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.goToInventory();
                 }
             });
         });
@@ -189,20 +214,60 @@ class InventoryDashboard {
         const dateElement = document.getElementById('current-date');
         if (dateElement) {
             const today = new Date();
-            const options = { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
+            const options = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
                 day: 'numeric',
                 timeZone: 'America/Bogota'
             };
-            
+
             // Formato especial para Antioquia
             const formattedDate = today.toLocaleDateString('es-CO', options);
             dateElement.textContent = `Hoy es ${formattedDate} - Ceja, Antioquia`;
-            
+            dateElement.setAttribute('datetime', today.toISOString());
+
             // Actualizar también el título de la página
             document.title = `Dashboard - ${formattedDate} - Sistema de Inventario TI Ceja-Antioquia`;
+        }
+    }
+
+    // Ir a la página de perfil
+    goToProfile() {
+        this.announce('Navegando a la página de perfil');
+        window.location.href = '../perfil/perfil.html';
+    }
+
+    // Alternar barra lateral
+    toggleSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        const toggleIcon = document.querySelector('.toggle-icon');
+        const isCollapsed = sidebar.classList.contains('collapsed');
+
+        if (isCollapsed) {
+            sidebar.classList.remove('collapsed');
+            localStorage.setItem('sidebarCollapsed', 'false');
+            toggleIcon.className = 'bi bi-chevron-left toggle-icon';
+            this.announce('Barra lateral expandida');
+        } else {
+            sidebar.classList.add('collapsed');
+            localStorage.setItem('sidebarCollapsed', 'true');
+            toggleIcon.className = 'bi bi-list toggle-icon';
+            this.announce('Barra lateral contraída');
+        }
+    }
+
+    // Inicializar estado de la barra lateral
+    initSidebarState() {
+        const sidebarCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+        const sidebar = document.querySelector('.sidebar');
+        const toggleIcon = document.querySelector('.toggle-icon');
+
+        if (sidebarCollapsed) {
+            sidebar.classList.add('collapsed');
+            toggleIcon.className = 'bi bi-list toggle-icon';
+        } else {
+            toggleIcon.className = 'bi bi-chevron-left toggle-icon';
         }
     }
 
@@ -281,7 +346,7 @@ class InventoryDashboard {
             
             row.innerHTML = `
                 <td role="cell">${this.escapeHtml(product.name)}</td>
-                <td role="cell"><span class="stat-value ${statusClass}" aria-label="${product.currentStock} unidades">${product.currentStock}</span></td>
+                <td role="cell"><span aria-label="${product.currentStock} unidades">${product.currentStock}</span></td>
                 <td role="cell">${product.minRequired}</td>
                 <td role="cell"><span class="badge ${statusClass}" aria-label="${statusText}">${product.status}</span></td>
             `;
@@ -315,7 +380,7 @@ class InventoryDashboard {
         if (this.data.topProducts.length === 0) {
             const emptyRow = document.createElement('tr');
             emptyRow.innerHTML = `
-                <td colspan="4" class="empty-state">
+                <td colspan="3" class="empty-state">
                     <span aria-hidden="true">📊</span>
                     No hay datos de movimientos disponibles
                 </td>
@@ -337,7 +402,6 @@ class InventoryDashboard {
             row.innerHTML = `
                 <td role="cell">${this.escapeHtml(product.name)}</td>
                 <td role="cell">${this.escapeHtml(product.category)}</td>
-                <td role="cell">${product.movement} movimientos</td>
                 <td role="cell"><span class="trend ${trendClass}" aria-label="Tendencia ${trendDescription}">${trendIcon}</span></td>
             `;
             
@@ -383,9 +447,9 @@ class InventoryDashboard {
             datasets: [{
                 data: [sufficientPercentage, replenishmentPercentage, criticalPercentage],
                 backgroundColor: [
-                    'var(--success-main)',
-                    'var(--warning-main)',
-                    'var(--danger-main)'
+                    'var(--primary-main)',
+                    'var(--info-main)',
+                    'var(--secondary-main)'
                 ],
                 borderWidth: 0,
                 hoverOffset: 8
@@ -406,7 +470,7 @@ class InventoryDashboard {
                         font: {
                             size: 12
                         },
-                        color: 'var(--neutral-100)'
+                        color: 'var(--primary-main)'
                     }
                 },
                 tooltip: {
@@ -458,69 +522,83 @@ class InventoryDashboard {
     handleActionButton(event) {
         const button = event.currentTarget;
         const action = button.textContent.trim() || button.getAttribute('aria-label');
-        
+
         switch(action) {
             case 'Ver todos los productos':
-                this.viewAllProducts();
+                this.goToInventory();
                 break;
             case 'Gestionar alertas de stock':
-                this.manageStockAlerts();
+                this.goToInventory();
                 break;
             case 'Ver estadísticas completas':
-                this.viewFullStatistics();
+                this.goToInventory();
                 break;
             case 'Opciones del gráfico':
-                this.chartOptions();
+                this.goToInventory();
                 break;
             default:
                 console.log('Acción no implementada:', action);
         }
     }
 
+    // Ir al inventario
+    goToInventory() {
+        this.announce('Navegando al módulo de inventario');
+        window.location.href = '../inventario/inventario.html';
+    }
+
     // Ver detalles de un producto
     viewProductDetails(productId) {
         this.announce(`Abriendo detalles del producto con ID ${productId}`);
-        // Implementación real iría aquí
-        console.log('Ver detalles del producto:', productId);
+        // Redirigir al inventario para ver detalles
+        window.location.href = '/inventario/inventario.html';
     }
 
     // Ver todos los productos
     viewAllProducts() {
-        this.announce('Navegando a la vista completa de inventario');
-        // Implementación real iría aquí
-        console.log('Ver todos los productos');
+        this.goToInventory();
     }
 
     // Gestionar alertas de stock
     manageStockAlerts() {
-        this.announce('Abriendo gestión de alertas de stock bajo');
-        // Implementación real iría aquí
-        console.log('Gestionar alertas de stock');
+        this.goToInventory();
     }
 
     // Ver estadísticas completas
     viewFullStatistics() {
-        this.announce('Abriendo estadísticas completas del inventario');
-        // Implementación real iría aquí
-        console.log('Ver estadísticas completas');
+        this.goToInventory();
     }
 
     // Opciones del gráfico
     chartOptions() {
-        this.announce('Abriendo opciones de personalización del gráfico');
-        // Implementación real iría aquí
-        console.log('Opciones del gráfico');
+        this.goToInventory();
     }
 
     // Utilidad: Formatear fechas
     formatDate(dateString) {
-        try {
-            const options = { year: 'numeric', month: 'short', day: 'numeric' };
-            return new Date(dateString).toLocaleDateString('es-CO', options);
-        } catch (error) {
-            console.error('Error formateando fecha:', error);
-            return dateString;
+        if (!dateString) {
+            return 'Fecha inválida';
         }
+
+        // Ensure it's a string and trim it
+        const trimmedString = typeof dateString === 'string' ? dateString.trim() : String(dateString).trim();
+
+        // Check if it matches YYYY-MM-DD format
+        if (trimmedString.match(/^\d{4}-\d{2}-\d{2}$/)) {
+            const [year, month, day] = trimmedString.split('-');
+            return `${day}/${month}/${year}`;
+        }
+
+        // Try to parse as Date object as fallback
+        const directDate = new Date(trimmedString);
+        if (!isNaN(directDate.getTime())) {
+            const dd = String(directDate.getDate()).padStart(2, '0');
+            const mm = String(directDate.getMonth() + 1).padStart(2, '0');
+            const yyyy = directDate.getFullYear();
+            return `${dd}/${mm}/${yyyy}`;
+        }
+
+        return 'Fecha inválida';
     }
 
     // Utilidad: Escapar HTML para prevenir XSS
@@ -610,7 +688,8 @@ document.addEventListener('DOMContentLoaded', function() {
         .nav-item a:focus,
         .logout-btn:focus,
         .action-btn:focus,
-        .data-table tr:focus {
+        .data-table tr:focus,
+        .stat-card:focus {
             outline: 2px solid var(--primary-main);
             outline-offset: 2px;
         }
