@@ -6,199 +6,219 @@
     <title>Dashboard - Sistema de Inventario TI</title>
     <link rel="stylesheet" href="../css_general/variables.css">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="preload" href="https://cdn.datatables.net/css/dataTables.dataTables.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdn.datatables.net/css/responsive.dataTables.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+
 </head>
 <body>
-    <div class="dashboard-container">
-        <!-- Barra lateral -->
-        <aside class="sidebar" aria-label="Navegación principal">
-            <div class="sidebar-header">
-                <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Contraer/expandir barra lateral">
-                    <i class="bi bi-chevron-left toggle-icon" aria-hidden="true"></i>
-                </button>
-                <h2>Sistema de Inventario TI</h2>
-            </div>
-            <nav class="sidebar-nav" aria-label="Navegación principal">
-                <ul>
-                    <li class="nav-item active">
-                        <a href="#" aria-current="page">
-                            <i class="bi bi-speedometer2 icon" aria-hidden="true"></i>
-                            <span>Dashboard</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="../inventario/inventario.html">
-                            <i class="bi bi-box-seam icon" aria-hidden="true"></i>
-                            <span>Inventario</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <div class="sidebar-footer">
-                <button id="logout-btn" class="logout-btn" aria-label="Cerrar sesión">
-                    <i class="bi bi-box-arrow-right icon" aria-hidden="true"></i>
-                    <span>Cerrar sesión</span>
-                </button>
-            </div>
-        </aside>
+    <aside class="sidebar" aria-label="Navegación principal">
+        <div class="sidebar-header">
+            <h2>Sistema de Inventario TI</h2>
+            <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Contraer/expandir barra lateral">
+                <i class="bi bi-chevron-left toggle-icon" aria-hidden="true"></i>
+            </button>
+        </div>
+        
+        <nav class="sidebar-nav" aria-label="Navegación principal">
+            <ul>
+                <li class="nav-item active">
+                    <a href="#" aria-label="Ir al Dashboard">
+                        <i class="bi bi-speedometer2 icon" aria-hidden="true"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
 
-        <!-- Contenido principal -->
-        <main class="main-content" id="main-content" tabindex="-1">
-            <header class="content-header">
-                <h1>Dashboard de Inventario TI</h1>
-                <div class="user-info">
-                    <span>Hola, <strong>Admin</strong></span>
-                    <time id="current-date" datetime=""></time>
-                    <button id="profile-avatar-btn" class="profile-avatar-btn" aria-label="Ir al perfil">
-                        <i class="bi bi-person-circle avatar-icon" aria-hidden="true"></i>
-                    </button>
-                </div>
-            </header>
+                <li class="nav-item">
+                    <a href="../inventario/inventario.html" aria-label="Ir al Inventario">
+                        <i class="bi bi-box-seam icon" aria-hidden="true"></i>
+                        <span>Inventario</span>
+                    </a>
+                </li>
 
-            <!-- Resumen de estadísticas -->
-            <section class="stats-section" aria-labelledby="stats-heading">
-                <h2 id="stats-heading" class="visually-hidden">Resumen de estadísticas</h2>
-                <div class="stats-grid">
-                    <article class="stat-card success" role="button" tabindex="0" aria-label="Ver total de productos en inventario">
-                        <i class="bi bi-laptop stat-icon" aria-hidden="true"></i>
-                        <div class="stat-info">
-                            <h3>Total Productos</h3>
-                            <span class="stat-value">245</span>
-                            <span class="stat-change positive">+12 desde ayer</span>
-                        </div>
-                    </article>
-                    <article class="stat-card warning" role="button" tabindex="0" aria-label="Ver productos con stock bajo en inventario">
-                        <i class="bi bi-exclamation-triangle stat-icon" aria-hidden="true"></i>
-                        <div class="stat-info">
-                            <h3>Stock Bajo</h3>
-                            <span class="stat-value">12</span>
-                            <span class="stat-change">Necesitan atención</span>
-                        </div>
-                    </article>
-                    <article class="stat-card info" role="button" tabindex="0" aria-label="Ver productos actualizados hoy en inventario">
-                        <i class="bi bi-arrow-repeat stat-icon" aria-hidden="true"></i>
-                        <div class="stat-info">
-                            <h3>Actualizados Hoy</h3>
-                            <span class="stat-value">8</span>
-                            <span class="stat-change">Productos modificados</span>
-                        </div>
-                    </article>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <button id="logout-btn" class="logout-btn" aria-label="Cerrar sesión">
+                <i class="bi bi-box-arrow-right icon" aria-hidden="true"></i>
+                <span>Cerrar sesión</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Contenido principal -->
+    <main class="main-content" id="main-content" tabindex="-1">
+        <header class="content-header">
+            <h1>Dashboard de Inventario TI</h1>
+            <div class="user-info">
+                <span>Hola, <strong>Admin</strong></span>
+                <time id="current-date" datetime=""></time>
+                <button id="profile-avatar-btn" class="profile-avatar-btn" aria-label="Ir al perfil">
+                    <i class="bi bi-person-circle avatar-icon" aria-hidden="true"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Resumen de estadísticas -->
+        <section class="stats-section" aria-labelledby="stats-heading">
+            <h2 id="stats-heading" class="visually-hidden">Resumen de estadísticas</h2>
+            <div class="stats-grid">
+
+                <!-- Total productos -->
+                <button class="stat-card success" aria-label="Ver total de productos en inventario">
+                    <i class="bi bi-laptop stat-icon" aria-hidden="true"></i>
+                    <div class="stat-info">
+                        <h3>Total Productos</h3>
+                        <span class="stat-value">245</span>
+                        <span class="stat-change positive">+12 desde ayer</span>
+                    </div>
+                </button>
+
+                <!-- Stock bajo -->
+                <button class="stat-card warning" aria-label="Ver productos con stock bajo en inventario">
+                    <i class="bi bi-exclamation-triangle stat-icon" aria-hidden="true"></i>
+                    <div class="stat-info">
+                        <h3>Stock Bajo</h3>
+                        <span class="stat-value">12</span>
+                        <span class="stat-change negative">Necesitan atención</span>
+                    </div>
+                </button>
+
+                <!-- Actualizados hoy -->
+                <button class="stat-card info" aria-label="Ver productos actualizados hoy en inventario">
+                    <i class="bi bi-arrow-repeat stat-icon" aria-hidden="true"></i>
+                    <div class="stat-info">
+                        <h3>Actualizados Hoy</h3>
+                        <span class="stat-value">8</span>
+                        <span class="stat-change primary">Productos modificados</span>
+                    </div>
+                </button>
+
+            </div>
+        </section>
+
+
+        <!-- Secciones principales -->
+        <div class="content-grid">
+            <!-- Resumen de estado de inventario -->
+            <section class="card chart-card" aria-labelledby="inventory-status-heading">
+                <header class="card-header">
+                    <h2 id="inventory-status-heading">Estado del Inventario</h2>
+                    <div class="card-actions">
+                        <button class="action-btn primary" aria-label="Opciones del gráfico">
+                            <i class="bi bi-three-dots" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </header>
+                <figure class="chart-container">
+                    <canvas id="inventoryStatusChart" aria-label="Gráfico de estado de inventario" role="img"></canvas>
+                    <figcaption class="chart-info">
+                        <p>Muestra el porcentaje de productos con stock suficiente vs. aquellos que necesitan reposición.</p>
+                    </figcaption>
+                </figure>
+            </section>
+
+            <!-- Productos agregados recientemente -->
+            <section class="card table-card" aria-labelledby="recent-products-heading">
+                <header class="card-header">
+                    <h2 id="recent-products-heading">Productos recientes</h2>
+                    <div class="card-actions">
+                        <button class="action-btn primary" aria-label="Ver todos los productos">
+                            <i class="bi bi-eye" aria-hidden="true"></i>
+                            Ver todos
+                        </button>
+                    </div>
+                </header>
+                <div class="table-container">
+                    <table class="data-table">
+                        <caption class="visually-hidden">Lista de productos agregados recientemente</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">Producto</th>
+                                <th scope="col">Categoría</th>
+                                <th scope="col">Stock</th>
+                                <th scope="col">Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recent-products-body">
+                            <!-- Los datos se cargarán con JavaScript -->
+                        </tbody>
+                    </table>
                 </div>
             </section>
 
-            <!-- Secciones principales -->
-            <div class="content-grid">
-                <!-- Resumen de estado de inventario -->
-                <section class="card chart-card" aria-labelledby="inventory-status-heading">
-                    <header class="card-header">
-                        <h2 id="inventory-status-heading">Estado del Inventario</h2>
-                        <div class="card-actions">
-                            <button class="action-btn primary" aria-label="Opciones del gráfico">
-                                <i class="bi bi-three-dots" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                    </header>
-                    <figure class="chart-container">
-                        <canvas id="inventoryStatusChart" aria-label="Gráfico de estado de inventario" role="img"></canvas>
-                        <figcaption class="chart-info">
-                            <p>Muestra el porcentaje de productos con stock suficiente vs. aquellos que necesitan reposición.</p>
-                        </figcaption>
-                    </figure>
-                </section>
-
-                <!-- Productos agregados recientemente -->
-                <section class="card table-card" aria-labelledby="recent-products-heading">
-                    <header class="card-header">
-                        <h2 id="recent-products-heading">Productos recientes</h2>
-                        <div class="card-actions">
-                            <button class="action-btn primary" aria-label="Ver todos los productos">
-                                <i class="bi bi-eye" aria-hidden="true"></i>
-                                Ver todos
-                            </button>
-                        </div>
-                    </header>
-                    <div class="table-container">
-                        <table class="data-table">
-                            <caption class="visually-hidden">Lista de productos agregados recientemente</caption>
-                            <thead>
-                                <tr>
-                                    <th scope="col">Producto</th>
-                                    <th scope="col">Categoría</th>
-                                    <th scope="col">Stock</th>
-                                    <th scope="col">Fecha</th>
-                                </tr>
-                            </thead>
-                            <tbody id="recent-products-body">
-                                <!-- Los datos se cargarán con JavaScript -->
-                            </tbody>
-                        </table>
+            <!-- Alertas de stock bajo -->
+            <section class="card table-card alert-card" aria-labelledby="low-stock-heading">
+                <header class="card-header">
+                    <h2 id="low-stock-heading">Productos con stock bajo</h2>
+                    <div class="card-actions">
+                        <button class="action-btn primary" aria-label="Gestionar alertas de stock">
+                            <i class="bi bi-gear" aria-hidden="true"></i>
+                            Gestionar
+                        </button>
                     </div>
-                </section>
+                </header>
+                <div class="info-message">
+                    <p>Productos con menos de 10 unidades en stock. Es necesario reponerlos pronto.</p>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <caption class="visually-hidden">Lista de productos con stock bajo</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">Producto</th>
+                                <th scope="col">Stock Actual</th>
+                                <th scope="col">Mínimo Requerido</th>
+                                <th scope="col">Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="low-stock-body">
+                            <!-- Los datos se cargarán con JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
 
-                <!-- Alertas de stock bajo -->
-                <section class="card table-card alert-card" aria-labelledby="low-stock-heading">
-                    <header class="card-header">
-                        <h2 id="low-stock-heading">Productos con stock bajo</h2>
-                        <div class="card-actions">
-                            <button class="action-btn primary" aria-label="Gestionar alertas de stock">
-                                <i class="bi bi-gear" aria-hidden="true"></i>
-                                Gestionar
-                            </button>
-                        </div>
-                    </header>
-                    <div class="info-message">
-                        <p>Productos con menos de 10 unidades en stock. Es necesario reponerlos pronto.</p>
+            <!-- Productos más movidos -->
+            <section class="card table-card" aria-labelledby="top-products-heading">
+                <header class="card-header">
+                    <h2 id="top-products-heading">Productos más movidos</h2>
+                    <div class="card-actions">
+                        <button class="action-btn primary" aria-label="Ver estadísticas completas">
+                            <i class="bi bi-bar-chart" aria-hidden="true"></i>
+                            Ver más
+                        </button>
                     </div>
-                    <div class="table-container">
-                        <table class="data-table">
-                            <caption class="visually-hidden">Lista de productos con stock bajo</caption>
-                            <thead>
-                                <tr>
-                                    <th scope="col">Producto</th>
-                                    <th scope="col">Stock Actual</th>
-                                    <th scope="col">Mínimo Requerido</th>
-                                    <th scope="col">Estado</th>
-                                </tr>
-                            </thead>
-                            <tbody id="low-stock-body">
-                                <!-- Los datos se cargarán con JavaScript -->
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
+                </header>
+                <div class="table-container">
+                    <table class="data-table">
+                        <caption class="visually-hidden">Lista de productos más movidos</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">Producto</th>
+                                <th scope="col">Categoría</th>
+                                <th scope="col">Tendencia</th>
+                            </tr>
+                        </thead>
+                        <tbody id="top-products-body">
+                            <!-- Los datos se cargarán con JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </main>
+    
 
-                <!-- Productos más movidos -->
-                <section class="card table-card" aria-labelledby="top-products-heading">
-                    <header class="card-header">
-                        <h2 id="top-products-heading">Productos más movidos</h2>
-                        <div class="card-actions">
-                            <button class="action-btn primary" aria-label="Ver estadísticas completas">
-                                <i class="bi bi-bar-chart" aria-hidden="true"></i>
-                                Ver más
-                            </button>
-                        </div>
-                    </header>
-                    <div class="table-container">
-                        <table class="data-table">
-                            <caption class="visually-hidden">Lista de productos más movidos</caption>
-                            <thead>
-                                <tr>
-                                    <th scope="col">Producto</th>
-                                    <th scope="col">Categoría</th>
-                                    <th scope="col">Tendencia</th>
-                                </tr>
-                            </thead>
-                            <tbody id="top-products-body">
-                                <!-- Los datos se cargarán con JavaScript -->
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
-            </div>
-        </main>
-    </div>
+    
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" defer></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" defer></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js" defer></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.min.js" defer></script>
+    
+    <script src="script.js" defer></script>    
 </body>
 </html>

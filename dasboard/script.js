@@ -1,3 +1,19 @@
+function showAlert(type, title, message) {
+    const alert = document.createElement('div');
+    alert.className = `custom-alert ${type}`; // success | error | warning
+    alert.innerHTML = `
+        <strong>${title}</strong><br>
+        <span>${message}</span>
+    `;
+    document.body.appendChild(alert);
+
+    setTimeout(() => {
+        alert.classList.add('fade-out');
+        setTimeout(() => alert.remove(), 500);
+    }, 2500);
+}
+
+
 // Datos de ejemplo adaptados para Ceja-Antioquia
 const sampleData = {
     recentProducts: [
@@ -29,6 +45,7 @@ class InventoryDashboard {
         this.data = null;
         this.inventoryChart = null;
         this.isLoading = false;
+        this.dataTable = null;
         this.init();
     }
 
@@ -187,6 +204,23 @@ class InventoryDashboard {
         }
     }
 
+    // Iniciar el datatable
+    initDataTable() {
+        if (!this.dataTable) {
+            this.dataTable = $('#products-table').DataTable({
+                responsive: true,
+                autoWidth: false,
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/2.3.4/i18n/es-ES.json"
+                },
+            
+                paging: true,       // activa la paginación
+                info: false,         // muestra "Mostrando 1 a 10 de X registros"
+                searching: false,   // quita la caja de búsqueda
+            });
+        }
+    }
+
     // Establecer estado de carga
     setLoadingState(isLoading) {
         this.isLoading = isLoading;
@@ -206,6 +240,7 @@ class InventoryDashboard {
         this.loadRecentProducts();
         this.loadLowStockProducts();
         this.loadTopProducts();
+        this.initDataTable();
         this.initInventoryChart();
     }
 
@@ -437,7 +472,12 @@ class InventoryDashboard {
         const sufficientPercentage = total > 0 ? Math.round((sufficientStock / total) * 100) : 0;
         const replenishmentPercentage = total > 0 ? Math.round((needsReplenishment / total) * 100) : 0;
         const criticalPercentage = total > 0 ? Math.round((criticalStock / total) * 100) : 0;
-        
+
+        const styles = getComputedStyle(document.documentElement);
+        const successColor = styles.getPropertyValue("--success-main").trim();
+        const warningColor = styles.getPropertyValue("--warning-main").trim();
+        const dangerColor = styles.getPropertyValue("--danger-main").trim();
+            
         const data = {
             labels: [
                 `Stock suficiente (${sufficientPercentage}%)`,
@@ -447,9 +487,9 @@ class InventoryDashboard {
             datasets: [{
                 data: [sufficientPercentage, replenishmentPercentage, criticalPercentage],
                 backgroundColor: [
-                    'var(--primary-main)',
-                    'var(--info-main)',
-                    'var(--secondary-main)'
+                    successColor,
+                    warningColor,
+                    dangerColor
                 ],
                 borderWidth: 0,
                 hoverOffset: 8
@@ -500,23 +540,66 @@ class InventoryDashboard {
         ctx.setAttribute('aria-label', chartDescription);
     }
 
-    // Manejar el cierre de sesión
     handleLogout() {
         if (this.isLoading) return;
-        
-        // Confirmación accesible de cierre de sesión
-        if (confirm('¿Estás seguro de que deseas cerrar sesión?\nSerás redirigido a la página de inicio de sesión.')) {
-            this.announce('Cerrando sesión, por favor espere');
-            this.setLoadingState(true);
-            
-            // Simular proceso de cierre de sesión
-            setTimeout(() => {
-                alert('Sesión cerrada correctamente. Redirigiendo al login...');
-                // window.location.href = 'login.html';
-                this.setLoadingState(false);
-            }, 1000);
+
+        const modal = document.getElementById('logout-modal');
+        const confirmBtn = document.getElementById('confirm-logout');
+        const cancelBtn = document.getElementById('cancel-logout');
+
+        if (!modal || !confirmBtn || !cancelBtn) {
+            console.error("Modal de logout o botones no encontrados en el DOM");
+            return;
         }
+
+        // Mostrar modal
+        modal.removeAttribute('hidden');
+
+        // Enfocar el botón de confirmación para accesibilidad
+        confirmBtn.focus();
+
+        // Acción al confirmar
+        const confirmAction = () => {
+            cleanup();
+            modal.setAttribute('hidden', 'true');
+
+            showAlert(
+                "success",
+                "Sesión cerrada",
+                "Redirigiendo al login..."
+            );
+
+            // Simular redirección después de 2 segundos
+            setTimeout(() => {
+                window.location.href = "/inicio/index.html";
+            }, 2000);
+        };
+
+        // Acción al cancelar
+        const cancelAction = () => {
+            modal.setAttribute('hidden', 'true');
+            cleanup();
+        };
+
+        // Cerrar con ESC
+        const escHandler = (e) => {
+            if (e.key === "Escape") cancelAction();
+        };
+
+        // Limpieza de listeners
+        function cleanup() {
+            confirmBtn.removeEventListener('click', confirmAction);
+            cancelBtn.removeEventListener('click', cancelAction);
+            document.removeEventListener('keydown', escHandler);
+        }
+
+        // Listeners
+        confirmBtn.addEventListener('click', confirmAction);
+        cancelBtn.addEventListener('click', cancelAction);
+        document.addEventListener('keydown', escHandler);
     }
+
+
 
     // Manejar botones de acción
     handleActionButton(event) {

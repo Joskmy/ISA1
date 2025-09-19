@@ -228,8 +228,8 @@ form.addEventListener("submit", async function (e) {
 
     // Simular redirección después de 2 segundos
     setTimeout(() => {
-  window.location.href = "/dasboard/dashboard.html";
-}, 2000);
+      window.location.href = "/dasboard/dashboard.html";
+    }, 2000);
 
 
   } catch (error) {

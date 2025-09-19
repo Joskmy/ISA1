@@ -9,118 +9,118 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 </head>
 <body>
-    <div class="profile-container">
-        <!-- Barra lateral -->
-        <aside class="sidebar" aria-label="Navegación principal">
-            <div class="sidebar-header">
-                <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Contraer/expandir barra lateral">
-                    <i class="bi bi-chevron-left toggle-icon" aria-hidden="true"></i>
-                </button>
-                <h2>Sistema de Inventario TI</h2>
-            </div>
-            <nav class="sidebar-nav" aria-label="Navegación principal">
-                <ul>
-                    <li class="nav-item">
-                        <a href="../dasboard/dashboard.html">
-                            <i class="bi bi-speedometer2 icon" aria-hidden="true"></i>
-                            <span>Dashboard</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="../inventario/inventario.html">
-                            <i class="bi bi-box-seam icon" aria-hidden="true"></i>
-                            <span>Inventario</span>
-                        </a>
-                    </li>
-                    <li class="nav-item active">
-                        <a href="#" aria-current="page">
-                            <i class="bi bi-person-circle icon" aria-hidden="true"></i>
-                            <span>Perfil</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <div class="sidebar-footer">
-                <button id="logout-btn" class="logout-btn" aria-label="Cerrar sesión">
-                    <i class="bi bi-box-arrow-right icon" aria-hidden="true"></i>
-                    <span>Cerrar sesión</span>
-                </button>
-            </div>
-        </aside>
+    <aside class="sidebar" aria-label="Navegación principal">
+        <div class="sidebar-header">
+            <h2>Sistema de Inventario TI</h2>
+            <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Contraer/expandir barra lateral">
+                <i class="bi bi-chevron-left toggle-icon" aria-hidden="true"></i>
+            </button>
+        </div>
 
-        <!-- Contenido principal -->
-        <main class="main-content" id="main-content" tabindex="-1">
-            <header class="content-header">
-                <h1>Mi Perfil</h1>
-                <div class="user-info">
-                    <span>Hola, <strong id="user-greeting">Admin</strong></span>
-                    <time id="current-date" datetime=""></time>
-                    <button id="profile-avatar-btn" class="profile-avatar-btn" aria-label="Ir al perfil">
-                        <i class="bi bi-person-circle avatar-icon" aria-hidden="true"></i>
+        <nav class="sidebar-nav" aria-label="Navegación principal">
+            <ul>
+                <li class="nav-item">
+                    <a href="../dasboard/dashboard.html" aria-label="Ir al Dashboard">
+                        <i class="bi bi-speedometer2 icon" aria-hidden="true"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="../inventario/inventario.html" aria-label="Ir al Inventario">
+                        <i class="bi bi-box-seam icon" aria-hidden="true"></i>
+                        <span>Inventario</span>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a href="#" aria-label="Mi perfil">
+                        <i class="bi bi-person-circle icon" aria-hidden="true"></i>
+                        <span>Inventario</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button id="logout-btn" class="logout-btn" aria-label="Cerrar sesión">
+                <i class="bi bi-box-arrow-right icon" aria-hidden="true"></i>
+                <span>Cerrar sesión</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Contenido principal -->
+    <main class="main-content" id="main-content" tabindex="-1">
+        <header class="content-header">
+            <h1>Mi Perfil</h1>
+            <div class="user-info">
+                <span>Hola, <strong id="user-greeting">Admin</strong></span>
+                <time id="current-date" datetime=""></time>
+                <button id="profile-avatar-btn" class="profile-avatar-btn" aria-label="Ir al perfil">
+                    <i class="bi bi-person-circle avatar-icon" aria-hidden="true"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Información del perfil -->
+        <section class="profile-section" aria-labelledby="profile-heading">
+            <h2 id="profile-heading" class="visually-hidden">Información del perfil</h2>
+
+            <div class="profile-card">
+                <div class="profile-avatar-large">
+                    <i class="bi bi-person-circle avatar-icon-large" aria-hidden="true"></i>
+                </div>
+
+                <div class="profile-details">
+                    <div class="detail-group">
+                        <label for="profile-name-display">Nombre:</label>
+                        <span id="profile-name-display">Admin</span>
+                    </div>
+
+                    <div class="detail-group">
+                        <label for="profile-email-display">Correo electrónico:</label>
+                        <span id="profile-email-display">admin@gmail.com</span>
+                    </div>
+
+                    <div class="detail-group">
+                        <label for="profile-role-display">Rol:</label>
+                        <span id="profile-role-display">Administrador</span>
+                    </div>
+
+                    <div class="detail-group">
+                        <label for="profile-team-display">Equipo:</label>
+                        <span id="profile-team-display">EQUIPO-001 - Producción</span>
+                    </div>
+                </div>
+
+                <div class="profile-actions">
+                    <button id="edit-profile-btn" class="btn-primary" aria-label="Editar perfil">
+                        <i class="bi bi-pencil-square icon" aria-hidden="true"></i>
+                        Editar Perfil
                     </button>
                 </div>
-            </header>
-
-            <!-- Información del perfil -->
-            <section class="profile-section" aria-labelledby="profile-heading">
-                <h2 id="profile-heading" class="visually-hidden">Información del perfil</h2>
-
-                <div class="profile-card">
-                    <div class="profile-avatar-large">
-                        <i class="bi bi-person-circle avatar-icon-large" aria-hidden="true"></i>
-                    </div>
-
-                    <div class="profile-details">
-                        <div class="detail-group">
-                            <label for="profile-name-display">Nombre:</label>
-                            <span id="profile-name-display">Admin</span>
-                        </div>
-
-                        <div class="detail-group">
-                            <label for="profile-email-display">Correo:</label>
-                            <span id="profile-email-display">admin@gmail.com</span>
-                        </div>
-
-                        <div class="detail-group">
-                            <label for="profile-role-display">Rol:</label>
-                            <span id="profile-role-display">Administrador</span>
-                        </div>
-
-                        <div class="detail-group">
-                            <label for="profile-team-display">Equipo:</label>
-                            <span id="profile-team-display">EQUIPO-001 - Producción</span>
-                        </div>
-                    </div>
-
-                    <div class="profile-actions">
-                        <button id="edit-profile-btn" class="btn-primary" aria-label="Editar perfil">
-                            <i class="bi bi-pencil-square icon" aria-hidden="true"></i>
-                            Editar Perfil
-                        </button>
-                    </div>
-                </div>
-            </section>
-        </main>
-    </div>
+            </div>
+        </section>
+    </main>
 
     <!-- Modal para editar perfil -->
     <div id="profile-modal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="profile-modal-title">
         <div class="modal-content">
             <header class="modal-header">
-                <h2 id="profile-modal-title">Editar Perfil</h2>
+                <h2 id="profile-modal-title">Editar perfil</h2>
                 <button class="close-modal" aria-label="Cerrar modal de perfil">&times;</button>
             </header>
             <form id="profile-form">
                 <div class="form-group">
-                    <label for="profile-name">Nombre</label>
-                    <input type="text" id="profile-name" name="name" required>
+                    <label for="profile-name" required>Nombre</label>
+                    <input type="text" id="profile-name" name="name" placeholder="Nombre" required>
                 </div>
                 <div class="form-group">
-                    <label for="profile-email">Correo</label>
-                    <input type="email" id="profile-email" name="email" required>
+                    <label for="profile-email" required>Correo electrónico</label>
+                    <input type="email" id="profile-email" name="email" placeholder="Correo electrónico" required>
                 </div>
                 <div class="form-group">
-                    <label for="profile-role">Rol</label>
+                    <label for="profile-role" required>Rol</label>
                     <select id="profile-role" name="role" required>
                         <option value="Administrador">Administrador</option>
                         <option value="Usuario">Usuario</option>
@@ -128,7 +128,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="profile-team">Equipo</label>
+                    <label for="profile-team" required>Equipo</label>
                     <select id="profile-team" name="team" required>
                         <option value="EQUIPO-001 - Producción">EQUIPO-001 - Producción</option>
                         <option value="EQUIPO-002 - Soporte">EQUIPO-002 - Soporte</option>
@@ -139,6 +139,23 @@
                     <button type="submit" class="btn-primary">Guardar Cambios</button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- Modal para cerrar sesión -->
+    <div id="logout-modal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="logout-title">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h2 id="logout-title">Cerrar Sesión</h2>
+                <button class="close-modal" aria-label="Cerrar modal">&times;</button>
+            </header>
+            <div class="modal-body">
+                <p>¿Estás seguro de que deseas cerrar sesión?</p>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn-secondary" id="cancel-logout">Cancelar</button>
+                <button type="button" class="btn-primary" id="confirm-logout">Cerrar Sesión</button>
+            </div>
         </div>
     </div>
 

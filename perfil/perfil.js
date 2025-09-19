@@ -270,15 +270,14 @@ class ProfileApp {
         }
     }
 }
+    // Inicializar la aplicación cuando el DOM esté cargado
+    document.addEventListener('DOMContentLoaded', function() {
+        // Crear instancia de la aplicación
+        window.profileApp = new ProfileApp();
 
-// Inicializar la aplicación cuando el DOM esté cargado
-document.addEventListener('DOMContentLoaded', function() {
-    // Crear instancia de la aplicación
-    window.profileApp = new ProfileApp();
-
-    // Establecer foco en el contenido principal
-    const mainContent = document.getElementById('main-content');
-    if (mainContent) {
-        mainContent.focus();
-    }
-});
+        // Establecer foco en el contenido principal
+        const mainContent = document.getElementById('main-content');
+        if (mainContent) {
+            mainContent.focus();
+        }
+    });

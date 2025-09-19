@@ -41,35 +41,40 @@ body {
     position: fixed;
     height: 100vh;
     z-index: 100;
-    transition: width 0.3s ease;
+    transition: width 0.3s;
 }
 
 .sidebar.collapsed {
     width: 80px;
 }
+/* Ocultar texto al colapsar */
+.sidebar.collapsed .sidebar-header h2,
+.sidebar.collapsed .sidebar-nav span,
+.sidebar.collapsed .sidebar-footer span {
+    display: none;
+}
 
 .sidebar-header {
-    padding: 0 1.5rem 1.5rem;
+    display: flex;
+    align-items: center;       /* centra verticalmente título y flecha */
+    justify-content: space-between; /* deja el texto a la izquierda y la flecha pegada a la derecha */
+    padding: 0 1rem 1rem;
     border-bottom: 1px solid var(--neutral-30);
     margin-bottom: 1.5rem;
-    position: relative;
 }
 
 .sidebar-toggle {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    width: 30px;
-    height: 30px;
     background: none;
     border: none;
+    font-size: 1.5rem;
     cursor: pointer;
-    border-radius: var(--radius-sm);
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 40px;
+    height: 40px;
     color: var(--neutral-70);
-    transition: all 0.2s ease;
+    border-radius: var(--radius-sm);
 }
 
 .sidebar-toggle:hover {
@@ -91,16 +96,27 @@ body {
     font-weight: var(--font-semibold);
     color: var(--primary-main);
     transition: opacity 0.3s ease;
-}
+        margin: 0; /* quita margen que empuja */
 
-.sidebar.collapsed .sidebar-header h2 {
-    opacity: 0;
 }
 
 .sidebar-nav ul {
     list-style: none;
     padding: 0;
     margin: 0;
+}
+
+.sidebar-nav li a {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    gap: 10px;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.sidebar.collapsed .sidebar-nav li a {
+    justify-content: center; /* Ícono centrado */
 }
 
 .nav-item {
@@ -150,13 +166,14 @@ body {
 
 .sidebar-footer {
     margin-top: auto;
-    padding: 1.5rem;
+    padding: 12px;
     border-top: 1px solid var(--neutral-30);
 }
 
 .logout-btn {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     gap: 0.75rem;
     width: 100%;
     padding: 0.75rem;
@@ -216,7 +233,7 @@ body {
     display: flex;
     align-items: center;
     gap: 1rem;
-    color: var(--neutral-70);
+    color: var(--neutral-90);
     font-size: var(--font-body-md);
 }
 
@@ -255,12 +272,37 @@ body {
     margin-bottom: 2rem;
 }
 
+/* Botones en fila */
+.actions-nav {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;   
+}
+
+.actions-nav button {
+  flex: 1 1 auto;        /* crecen/reducen según espacio */
+  min-width: 160px;      /* tamaño mínimo para no quedar muy chicos */
+}
+
 .actions-bar {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
     gap: 1rem;
-    flex-wrap: wrap;
+}
+
+/* Botones en fila */
+.actions-bar > button {
+    margin-right: 0.5rem;
+}
+
+.actions-bar > button:last-of-type {
+    margin-right: 0;
+}
+
+.actions-bar > button,
+.filters {
+    flex: 1;
 }
 
 .btn-primary {
@@ -298,12 +340,11 @@ body {
     background: var(--neutral-30);
 }
 
+/* Filtros en cuadrícula */
 .filters {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    flex-wrap: nowrap;
-    overflow-x: auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
 }
 
 .filter-group {
@@ -315,10 +356,11 @@ body {
     flex-shrink: 0;
 }
 
+
 .filter-group label {
     font-size: var(--font-body-sm);
     font-weight: var(--font-medium);
-    color: var(--neutral-70);
+    color: var(--neutral-90);
     min-width: 70px;
     white-space: nowrap;
 }
@@ -331,38 +373,23 @@ body {
 }
 
 /* Tabla de productos */
-.table-section {
-    margin-bottom: 2rem;
-}
-
 .table-container {
-    overflow-x: auto;
     background-color: var(--neutral-10);
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.data-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.data-table th,
-.data-table td {
-    padding: 0.75rem 1.5rem;
-    text-align: left;
 }
 
 .data-table thead th {
     background-color: var(--neutral-20);
     font-weight: var(--font-semibold);
     font-size: var(--font-body-sm);
-    color: var(--neutral-70);
+    color: var(--neutral-90);
 }
 
 .data-table tbody tr {
     border-bottom: 1px solid var(--neutral-30);
     transition: background-color 0.2s ease;
+
 }
 
 .data-table tbody tr:last-child {
@@ -372,6 +399,7 @@ body {
 .data-table tbody tr:hover {
     background-color: var(--neutral-20);
 }
+
 
 .action-buttons {
     display: flex;
@@ -443,15 +471,26 @@ body {
 
 .reports-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 1.5rem;
+    justify-content: center;
+}
+
+.reports-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+    justify-content: center; /* centra las tarjetas en vez de estirarlas */
 }
 
 .report-card {
-    background-color: var(--neutral-10);
+    background: #fff;
     border-radius: 8px;
-    padding: 1.5rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    max-width: 600px;   /* 👈 límite máximo de ancho */
+    width: 100%;
+    margin: 0 auto;     /* 👈 centra la tarjeta en el espacio disponible */
 }
 
 .report-card h3 {
@@ -461,9 +500,13 @@ body {
 }
 
 .chart-container {
-    height: 250px;
     position: relative;
+    width: 100%;
+    max-width: 600px;  /* ancho máximo en desktop */
+    margin: 0 auto;    /* centra el gráfico */
+    height: 300px;     /* alto por defecto */
 }
+
 
 /* Modal */
 .modal {
@@ -487,21 +530,28 @@ body {
     background-color: var(--neutral-10);
     border-radius: 8px;
     width: 90%;
-    max-width: 500px;
+    max-width: 800px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.form-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Creates two equal-width columns */
+    gap: 1rem; /* Adjust the spacing between columns */
 }
 
 .modal-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center; /* Centra el contenido horizontalmente */
     align-items: center;
     padding: 1.5rem;
     border-bottom: 1px solid var(--neutral-30);
+    position: relative; /* Necesario para posicionar el botón */
 }
 
 .modal-header h2 {
-    font-size: var(--font-header-sm);
-    font-weight: var(--font-semibold);
+    text-align: center; /* Centra el texto del título */
+    flex-grow: 1; /* Permite que el título ocupe el espacio para centrarse */
 }
 
 .close-modal {
@@ -579,17 +629,35 @@ body {
     margin: 0.5rem 0;
 }
 
+
+
 /* Responsive */
 @media (max-width: 768px) {
     .sidebar {
-        width: 70px;
-        padding: 1rem 0;
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100vh;
+        z-index: 200; /* encima del contenido */
     }
 
-    .sidebar-header,
+    /* PERO si el usuario hace toggle para expandir */
+    .sidebar:not(.collapsed) {
+        width: 160px; /* ancho expandido en pantallas pequeñas */
+    }
+
+    /* Oculta solo los textos, no el logo ni los íconos */
+    .sidebar-header h2,
     .sidebar-nav span,
     .sidebar-footer span {
         display: none;
+    }
+
+    /* PERO si el sidebar está expandido por toggle, mostramos texto */
+    .sidebar:not(.collapsed) .sidebar-header h2,
+    .sidebar:not(.collapsed) .sidebar-nav span,
+    .sidebar:not(.collapsed) .sidebar-footer span {
+        display: inline;
     }
 
     .sidebar-nav a,
@@ -598,9 +666,28 @@ body {
         padding: 0.75rem;
     }
 
+    .sidebar:not(.collapsed) .sidebar-nav a,
+    .sidebar:not(.collapsed) .logout-btn {
+        justify-content: flex-start;
+        padding: 0.75rem 1rem;
+    }
+
     .main-content {
-        margin-left: 70px;
+        margin-left: 50px;
         padding: 1rem;
+    }
+
+    .sidebar:not(.collapsed) ~ .main-content {
+        margin-left: 50px;
+    }
+    .sidebar-nav a,
+    .logout-btn {
+        justify-content: center;
+        padding: 0.75rem;
+    }
+
+    .main-content {
+        margin-left: 0;
     }
 
     .content-header {
@@ -613,29 +700,31 @@ body {
         align-items: flex-start;
     }
 
-    .actions-bar {
-        flex-direction: column;
-        align-items: stretch;
+    .actions-nav {
+        flex-direction: column; /* botones uno debajo de otro */
     }
 
     .filters {
-        flex-direction: column;
-        gap: 0.5rem;
-        overflow-x: visible;
+        grid-template-columns: 1fr; /* filtros en una sola columna */
     }
 
-    .filter-group {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.25rem;
+    .report-card {
+        max-width: 100%;  /* usa todo el ancho */
+        margin: 0 auto;        /* elimina centrado forzado */
     }
 
-    .filter-group label {
-        min-width: auto;
-        white-space: normal;
+    .chart-container {
+        max-width: 100%;  /* usa todo el ancho del contenedor */
+        height: auto;     /* que el alto se ajuste dinámicamente */
     }
 
     .reports-grid {
         grid-template-columns: 1fr;
     }
+}
+
+label[required]::after {
+    content: '*';
+    color: var(--secondary-main); /* O cualquier color que prefieras para el asterisco */
+    margin-left: 5px;
 }

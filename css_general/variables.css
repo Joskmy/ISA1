@@ -28,7 +28,7 @@
   --secondary-border: #F5B5AE;
 
   /* Success */
-  --success-main: #4CAF50;
+  --success-main: #176516;
   --success-bg: #E8F5E9;
   --success-pressed: #2E7D32;
   --success-hover: #1A4D27;
@@ -37,7 +37,7 @@
 
   /* Warning */
   --warning-main: #E0C22C;
-  --warning-bg: #FFFADC;
+  --warning-bg: #332C04;
   --warning-pressed: #95891D;
   --warning-hover: #B8AC25;
   --warning-focus: #FFF8CF;

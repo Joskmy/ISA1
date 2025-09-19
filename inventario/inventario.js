@@ -29,6 +29,7 @@ class InventoryApp {
         this.valueChart = null;
         this.isEditing = false;
         this.editingId = null;
+        this.dataTable = null; // Instancia de DataTables
         this.categoryColors = [
             '#4CAF50',
             '#FFC107',
@@ -259,6 +260,25 @@ class InventoryApp {
         }
     }
 
+    // Iniciar el datatable
+    initDataTable() {
+        if (!this.dataTable) {
+            this.dataTable = $('#products-table').DataTable({
+                responsive: true,
+                autoWidth: false,
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/2.3.4/i18n/es-ES.json"
+                },
+            
+                paging: true,       // activa la paginación
+                info: false,         // muestra "Mostrando 1 a 10 de X registros"
+                searching: false,   // quita la caja de búsqueda
+            });
+        }
+    }
+
+
+
     // Cargar productos
     loadProducts() {
         // Intentar cargar datos guardados localmente
@@ -290,6 +310,7 @@ class InventoryApp {
         }
 
         this.filteredProducts = [...this.products];
+        this.initDataTable();  // Inicializa DataTables solo una vez
         this.renderProducts();
         this.initCharts();
         this.announce(`${this.products.length} productos cargados`);
@@ -297,48 +318,39 @@ class InventoryApp {
 
     // Renderizar productos en la tabla
     renderProducts() {
-        const tbody = document.getElementById('products-body');
-        if (!tbody) return;
-
-        tbody.innerHTML = '';
-
+        if (!this.dataTable) {
+            this.initDataTable();
+        }
+        this.dataTable.clear();
         if (this.filteredProducts.length === 0) {
-            const emptyRow = document.createElement('tr');
-            emptyRow.innerHTML = `
-                <td colspan="7" class="empty-state">
-                    <span aria-hidden="true">📭</span>
-                    No se encontraron productos
-                </td>
-            `;
-            tbody.appendChild(emptyRow);
+            this.dataTable.row.add([
+                `<span aria-hidden="true">📭</span> No se encontraron productos`,
+                '', '', '', '', '', ''
+            ]).draw();
             return;
         }
+        console.log(this.filteredProducts);
 
         this.filteredProducts.forEach(product => {
-            const row = document.createElement('tr');
-            row.setAttribute('data-product-id', product.id);
-
             const statusClass = product.status === 'Crítico' ? 'danger' :
                                 product.status === 'Bajo' ? 'warning' : 'success';
-
-            row.innerHTML = `
-                <td>${this.escapeHtml(product.name)}</td>
-                <td>${this.escapeHtml(product.category)}</td>
-                <td>${product.stock}</td>
-                <td>$${product.price.toLocaleString('es-CO')}</td>
-                <td><span class="badge ${statusClass}">${product.status}</span></td>
-                <td>${this.formatDate(product.dateAdded)}</td>
-                <td>
-                    <div class="action-buttons">
-                        <button class="btn-edit" onclick="inventoryApp.editProduct(${product.id})" aria-label="Editar ${product.name}">Editar</button>
-                        <button class="btn-delete" onclick="inventoryApp.deleteProduct(${product.id})" aria-label="Eliminar ${product.name}">Eliminar</button>
-                    </div>
-                </td>
-            `;
-
-            tbody.appendChild(row);
+            this.dataTable.row.add([
+                this.escapeHtml(product.name),
+                this.escapeHtml(product.category),
+                product.stock,
+                `$${product.price.toLocaleString('es-CO')}`,
+                `<span class="badge ${statusClass}">${product.status}</span>`,
+                this.formatDate(product.dateAdded),
+                `<div class="action-buttons">
+                    <button class="btn-edit" onclick="inventoryApp.editProduct(${product.id})" aria-label="Editar ${product.name}">Editar</button>
+                    <button class="btn-delete" onclick="inventoryApp.deleteProduct(${product.id})" aria-label="Eliminar ${product.name}">Eliminar</button>
+                </div>`
+            ]);
         });
+        this.dataTable.draw(false); // evita resetear la página actual
+
     }
+
 
     // Filtrar productos
     filterProducts() {
@@ -531,13 +543,13 @@ class InventoryApp {
     }
 
     // Gráfico de valor del inventario
-initValueChart() {
-    const ctx = document.getElementById('valueChart');
-    if (!ctx) return;
+    initValueChart() {
+        const ctx = document.getElementById('valueChart');
+        if (!ctx) return;
 
-    if (this.valueChart) {
-        this.valueChart.destroy();
-    }
+        if (this.valueChart) {
+            this.valueChart.destroy();
+        }
 
     const categoryValue = {};
     this.products.forEach(product => {

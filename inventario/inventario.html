@@ -7,159 +7,164 @@
     <link rel="stylesheet" href="../css_general/variables.css">
     <link rel="stylesheet" href="inventario.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.dataTables.min.css">
 </head>
 <body>
-    <div class="inventory-container">
-        <!-- Barra lateral -->
-        <aside class="sidebar" aria-label="Navegación principal">
-            <div class="sidebar-header">
-                <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Contraer/expandir barra lateral">
-                    <i class="bi bi-chevron-left toggle-icon" aria-hidden="true"></i>
-                </button>
-                <h2>Sistema de Inventario TI</h2>
-            </div>
-            <nav class="sidebar-nav" aria-label="Navegación principal">
-                <ul>
-                    <li class="nav-item">
-                        <a href="../dasboard/dashboard.html">
-                            <i class="bi bi-speedometer2 icon" aria-hidden="true"></i>
-                            <span>Dashboard</span>
-                        </a>
-                    </li>
-                    <li class="nav-item active">
-                        <a href="#" aria-current="page">
-                            <i class="bi bi-box-seam icon" aria-hidden="true"></i>
-                            <span>Inventario</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <div class="sidebar-footer">
-                <button id="logout-btn" class="logout-btn" aria-label="Cerrar sesión">
-                    <i class="bi bi-box-arrow-right icon" aria-hidden="true"></i>
-                    <span>Cerrar sesión</span>
-                </button>
-            </div>
-        </aside>
 
-        <!-- Contenido principal -->
-        <main class="main-content" id="main-content" tabindex="-1">
-            <header class="content-header">
-                <h1>Gestión de Inventario</h1>
-                <div class="user-info">
-                    <span>Hola, <strong>Admin</strong></span>
-                    <time id="current-date" datetime=""></time>
-                    <button id="profile-avatar-btn" class="profile-avatar-btn" aria-label="Ir al perfil">
-                        <i class="bi bi-person-circle avatar-icon" aria-hidden="true"></i>
-                    </button>
-                </div>
-            </header>
+    <!-- Barra lateral -->
+    <aside class="sidebar" aria-label="Navegación principal">
+        <div class="sidebar-header">
+            <h2>Sistema de Inventario TI</h2>
+            <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Contraer/expandir barra lateral">
+                <i class="bi bi-chevron-left toggle-icon" aria-hidden="true"></i>
+            </button>
+        </div>
 
-            <!-- Barra de acciones -->
-            <section class="actions-section" aria-labelledby="actions-heading">
-                <h2 id="actions-heading" class="visually-hidden">Acciones de inventario</h2>
-                <div class="actions-bar">
-                    <button id="add-product-btn" class="btn-primary" aria-label="Agregar nuevo producto">
-                        <i class="bi bi-plus-circle icon" aria-hidden="true"></i>
+        <nav class="sidebar-nav" aria-label="Navegación principal">
+            <ul>
+                <li class="nav-item active">
+                    <a href="../dasboard/dashboard.html" aria-label="Ir al Dashboard">
+                        <i class="bi bi-speedometer2 icon" aria-hidden="true"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href=".#" aria-label="Ir al Inventario">
+                        <i class="bi bi-box-seam icon" aria-hidden="true"></i>
+                        <span>Inventario</span>
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <button id="logout-btn" class="logout-btn" aria-label="Cerrar sesión">
+                <i class="bi bi-box-arrow-right icon" aria-hidden="true"></i>
+                <span>Cerrar sesión</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Contenido principal -->
+    <main class="main-content" id="main-content" tabindex="-1">
+        <header class="content-header">
+            <h1>Gestión de Inventario</h1>
+            <div class="user-info">
+                <span>Hola, <strong>Admin</strong></span>
+                <time id="current-date" datetime=""></time>
+                <button id="profile-avatar-btn" class="profile-avatar-btn" aria-label="Ir al perfil">
+                    <i class="bi bi-person-circle avatar-icon" aria-hidden="true"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Barra de acciones -->
+        <section class="actions-section" aria-labelledby="actions-heading">
+
+            <nav class="actions-nav" aria-label="Acciones rápidas">
+                <button id="add-product-btn" class="btn-primary" aria-label="Agregar nuevo producto">
+                    <i class="bi bi-plus-circle icon" aria-hidden="true"></i>
                         Agregar Producto
-                    </button>
-                    <button id="generate-report-btn" class="btn-primary" aria-label="Generar reporte">
-                        <i class="bi bi-file-earmark-spreadsheet icon" aria-hidden="true"></i>
+                </button>
+                <button id="generate-report-btn" class="btn-primary" aria-label="Generar reporte">
+                    <i class="bi bi-file-earmark-spreadsheet icon" aria-hidden="true"></i>
                         Generar Reporte
-                    </button>
-                    <button id="import-products-btn" class="btn-primary" aria-label="Importar productos">
-                        <i class="bi bi-upload icon" aria-hidden="true"></i>
+                </button>
+                <button id="import-products-btn" class="btn-primary" aria-label="Importar productos">
+                    <i class="bi bi-upload icon" aria-hidden="true"></i>
                         Importar Excel
-                    </button>
-                    <div class="filters">
-                        <div class="filter-group">
-                            <label for="search-input">Buscar:</label>
-                            <input type="text" id="search-input" placeholder="Buscar productos..." aria-label="Buscar productos">
-                        </div>
-                        <div class="filter-group">
-                            <label for="category-filter">Categoría:</label>
-                            <select id="category-filter" aria-label="Filtrar por categoría">
-                                <option value="">Todas las categorías</option>
-                                <option value="Computadoras">Computadoras</option>
-                                <option value="Monitores">Monitores</option>
-                                <option value="Periféricos">Periféricos</option>
-                                <option value="Redes">Redes</option>
-                                <option value="Almacenamiento">Almacenamiento</option>
-                                <option value="Componentes">Componentes</option>
-                                <option value="Accesorios">Accesorios</option>
-                                <option value="Impresión">Impresión</option>
-                                <option value="Mobiliario">Mobiliario</option>
-                                <option value="Cables">Cables</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <label for="status-filter">Estado:</label>
-                            <select id="status-filter" aria-label="Filtrar por estado">
-                                <option value="">Todos los estados</option>
-                                <option value="Disponible">Disponible</option>
-                                <option value="Bajo">Bajo</option>
-                                <option value="Crítico">Crítico</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <label for="date-from">Desde:</label>
-                            <input type="date" id="date-from" aria-label="Fecha desde">
-                        </div>
-                        <div class="filter-group">
-                            <label for="date-to">Hasta:</label>
-                            <input type="date" id="date-to" aria-label="Fecha hasta">
-                        </div>
-                        <div class="filter-group">
-                            <button id="clear-filters-btn" class="btn-secondary" aria-label="Limpiar todos los filtros">Limpiar Filtros</button>
-                        </div>
+                </button>
+            </nav>
+            <form class="filters" aria-label="Filtros de búsqueda">
+                <div class="filter-group">
+                    <label for="search-input">Buscar:</label>
+                    <input type="text" id="search-input" placeholder="Buscar productos..." aria-label="Buscar productos">
+                </div>
+                <div class="filter-group">
+                    <label for="category-filter">Categoría:</label>
+                    <select id="category-filter" aria-label="Filtrar por categoría">
+                        <option value="">Todas las categorías</option>
+                        <option value="Computadoras">Computadoras</option>
+                        <option value="Monitores">Monitores</option>
+                        <option value="Periféricos">Periféricos</option>
+                        <option value="Redes">Redes</option>
+                        <option value="Almacenamiento">Almacenamiento</option>
+                        <option value="Componentes">Componentes</option>
+                        <option value="Accesorios">Accesorios</option>
+                        <option value="Impresión">Impresión</option>
+                        <option value="Mobiliario">Mobiliario</option>
+                        <option value="Cables">Cables</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="status-filter">Estado:</label>
+                    <select id="status-filter" aria-label="Filtrar por estado">
+                        <option value="">Todos</option>
+                        <option value="Disponible">Disponible</option>
+                        <option value="Bajo">Bajo</option>
+                        <option value="Crítico">Crítico</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="date-from">Desde:</label>
+                    <input type="date" id="date-from" aria-label="Fecha desde">
+                </div>
+                <div class="filter-group">
+                    <label for="date-to">Hasta:</label>
+                    <input type="date" id="date-to" aria-label="Fecha hasta">
+                </div>
+                <div class="filter-group">
+                    <button id="clear-filters-btn" class="btn-secondary" aria-label="Limpiar filtros">Limpiar</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Tabla de productos -->
+        <section class="table-section" aria-labelledby="products-heading">
+            <h2 id="products-heading" class="visually-hidden">Lista de productos</h2>
+            <div class="table-container">
+                <table class="data-table" id="products-table">
+                    <caption class="visually-hidden">Tabla de productos en inventario</caption>
+                    <thead>
+                        <tr>
+                            <th class="col-producto" scope="col">Producto</th>  
+                            <th class="col-categoria" scope="col">Categoría</th>
+                            <th class="col-stock" scope="col">Stock</th>
+                            <th class="col-precio" scope="col">Precio</th>
+                            <th class="col-estado" scope="col">Estado</th>
+                            <th class="col-fecha" scope="col">Fecha Agregado</th>
+                            <th class="col-acciones" scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="products-body">
+                        <!-- Los datos se cargarán con JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Reportes -->
+        <section class="reports-section" aria-labelledby="reports-heading">
+            <h2 id="reports-heading">Reportes de Inventario</h2>
+            <div class="reports-grid">
+                <article class="report-card">
+                    <h3>Distribución por Categoría</h3>
+                    <div class="chart-container">
+                        <canvas id="categoryChart" aria-label="Gráfico de distribución por categoría" role="img"></canvas>
                     </div>
-                </div>
-            </section>
+                </article>
+                <article class="report-card">
+                    <h3>Valor del Inventario</h3>
+                    <div class="chart-container">
+                        <canvas id="valueChart" aria-label="Gráfico de valor del inventario" role="img"></canvas>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
 
-            <!-- Tabla de productos -->
-            <section class="table-section" aria-labelledby="products-heading">
-                <h2 id="products-heading" class="visually-hidden">Lista de productos</h2>
-                <div class="table-container">
-                    <table class="data-table" id="products-table">
-                        <caption class="visually-hidden">Tabla de productos en inventario</caption>
-                        <thead>
-                            <tr>
-                                <th scope="col">Producto</th>
-                                <th scope="col">Categoría</th>
-                                <th scope="col">Stock</th>
-                                <th scope="col">Precio</th>
-                                <th scope="col">Estado</th>
-                                <th scope="col">Fecha Agregado</th>
-                                <th scope="col">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="products-body">
-                            <!-- Los datos se cargarán con JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <!-- Reportes -->
-            <section class="reports-section" aria-labelledby="reports-heading">
-                <h2 id="reports-heading">Reportes de Inventario</h2>
-                <div class="reports-grid">
-                    <article class="report-card">
-                        <h3>Distribución por Categoría</h3>
-                        <div class="chart-container">
-                            <canvas id="categoryChart" aria-label="Gráfico de distribución por categoría" role="img"></canvas>
-                        </div>
-                    </article>
-                    <article class="report-card">
-                        <h3>Valor del Inventario</h3>
-                        <div class="chart-container">
-                            <canvas id="valueChart" aria-label="Gráfico de valor del inventario" role="img"></canvas>
-                        </div>
-                    </article>
-                </div>
-            </section>
-        </main>
-    </div>
 
     <!-- Modal para agregar/editar producto -->
     <div id="product-modal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="modal-title">
@@ -170,11 +175,11 @@
             </header>
             <form id="product-form">
                 <div class="form-group">
-                    <label for="product-name">Nombre del Producto</label>
-                    <input type="text" id="product-name" name="name" required>
+                    <label for="product-name" required>Nombre del producto</label>
+                    <input type="text" id="product-name" name="name" placeholder="Nombre del producto" required>
                 </div>
                 <div class="form-group">
-                    <label for="product-category">Categoría</label>
+                    <label for="product-category" required>Categoría</label>
                     <select id="product-category" name="category" required>
                         <option value="">Seleccionar categoría</option>
                         <option value="Computadoras">Computadoras</option>
@@ -190,12 +195,12 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="product-stock">Stock</label>
-                    <input type="number" id="product-stock" name="stock" min="0" required>
+                    <label for="product-stock" required>Stock</label>
+                    <input type="number" id="product-stock" name="stock" min="0" placeholder="0" required>
                 </div>
                 <div class="form-group">
-                    <label for="product-price">Precio Unitario</label>
-                    <input type="number" id="product-price" name="price" min="0" step="0.01" required>
+                    <label for="product-price" required>Precio Unitario</label>
+                    <input type="number" id="product-price" name="price" min="0" step="0.01" placeholder="0"required>
                 </div>
                 <div class="form-actions">
                     <button type="button" class="btn-secondary" id="cancel-btn">Cancelar</button>
@@ -221,13 +226,15 @@
                 <p><strong>Formato de salida:</strong> Archivo Excel (.xlsx)</p>
             </div>
             <form id="report-form">
-                <div class="form-group">
-                    <label for="report-date-from">Fecha desde</label>
-                    <input type="date" id="report-date-from" required>
-                </div>
-                <div class="form-group">
-                    <label for="report-date-to">Fecha hasta</label>
-                    <input type="date" id="report-date-to" required>
+                <div class="form-columns">
+                    <div class="form-group">
+                        <label for="report-date-from">Fecha desde</label>
+                        <input type="date" id="report-date-from" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="report-date-to">Fecha hasta</label>
+                        <input type="date" id="report-date-to" required>
+                    </div>
                 </div>
                 <div class="form-actions">
                     <button type="button" class="btn-secondary" id="cancel-report-btn">Cancelar</button>
@@ -266,8 +273,15 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script src="inventario.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" defer></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" defer></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js" defer></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.min.js" defer></script>
+    
+    <script src="inventario.js" defer></script>    
+
+
 </body>
 </html>

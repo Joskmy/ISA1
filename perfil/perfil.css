@@ -24,12 +24,6 @@ body {
     border: 0;
 }
 
-/* Contenedor principal del perfil */
-.profile-container {
-    display: flex;
-    min-height: 100vh;
-}
-
 /* Barra lateral */
 .sidebar {
     width: 280px;
@@ -41,35 +35,40 @@ body {
     position: fixed;
     height: 100vh;
     z-index: 100;
-    transition: width 0.3s ease;
+    transition: width 0.3s;
 }
 
 .sidebar.collapsed {
     width: 80px;
 }
+/* Ocultar texto al colapsar */
+.sidebar.collapsed .sidebar-header h2,
+.sidebar.collapsed .sidebar-nav span,
+.sidebar.collapsed .sidebar-footer span {
+    display: none;
+}
 
 .sidebar-header {
-    padding: 0 1.5rem 1.5rem;
+    display: flex;
+    align-items: center;       /* centra verticalmente título y flecha */
+    justify-content: space-between; /* deja el texto a la izquierda y la flecha pegada a la derecha */
+    padding: 0 1rem 1rem;
     border-bottom: 1px solid var(--neutral-30);
     margin-bottom: 1.5rem;
-    position: relative;
 }
 
 .sidebar-toggle {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    width: 30px;
-    height: 30px;
     background: none;
     border: none;
+    font-size: 1.5rem;
     cursor: pointer;
-    border-radius: var(--radius-sm);
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 40px;
+    height: 40px;
     color: var(--neutral-70);
-    transition: all 0.2s ease;
+    border-radius: var(--radius-sm);
 }
 
 .sidebar-toggle:hover {
@@ -91,16 +90,27 @@ body {
     font-weight: var(--font-semibold);
     color: var(--primary-main);
     transition: opacity 0.3s ease;
-}
+        margin: 0; /* quita margen que empuja */
 
-.sidebar.collapsed .sidebar-header h2 {
-    opacity: 0;
 }
 
 .sidebar-nav ul {
     list-style: none;
     padding: 0;
     margin: 0;
+}
+
+.sidebar-nav li a {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    gap: 10px;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.sidebar.collapsed .sidebar-nav li a {
+    justify-content: center; /* Ícono centrado */
 }
 
 .nav-item {
@@ -150,13 +160,14 @@ body {
 
 .sidebar-footer {
     margin-top: auto;
-    padding: 1.5rem;
+    padding: 12px;
     border-top: 1px solid var(--neutral-30);
 }
 
 .logout-btn {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     gap: 0.75rem;
     width: 100%;
     padding: 0.75rem;
@@ -166,6 +177,10 @@ body {
     color: var(--neutral-100);
     cursor: pointer;
     transition: all 0.2s ease;
+}
+
+.logout-btn:hover {
+    background-color: var(--secondary-hover);
 }
 
 .sidebar.collapsed .logout-btn {
@@ -181,10 +196,6 @@ body {
 
 .sidebar.collapsed .logout-btn span {
     opacity: 0;
-}
-
-.logout-btn:hover {
-    background-color: var(--secondary-hover);
 }
 
 /* Contenido principal */
@@ -216,7 +227,7 @@ body {
     display: flex;
     align-items: center;
     gap: 1rem;
-    color: var(--neutral-70);
+    color: var(--neutral-90);
     font-size: var(--font-body-md);
 }
 
@@ -435,14 +446,30 @@ body {
 /* Responsive */
 @media (max-width: 768px) {
     .sidebar {
-        width: 70px;
-        padding: 1rem 0;
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100vh;
+        z-index: 200; /* encima del contenido */
     }
 
-    .sidebar-header,
+    /* PERO si el usuario hace toggle para expandir */
+    .sidebar:not(.collapsed) {
+        width: 160px; /* ancho expandido en pantallas pequeñas */
+    }
+
+    /* Oculta solo los textos, no el logo ni los íconos */
+    .sidebar-header h2,
     .sidebar-nav span,
     .sidebar-footer span {
         display: none;
+    }
+
+    /* PERO si el sidebar está expandido por toggle, mostramos texto */
+    .sidebar:not(.collapsed) .sidebar-header h2,
+    .sidebar:not(.collapsed) .sidebar-nav span,
+    .sidebar:not(.collapsed) .sidebar-footer span {
+        display: inline;
     }
 
     .sidebar-nav a,
@@ -451,8 +478,14 @@ body {
         padding: 0.75rem;
     }
 
+    .sidebar:not(.collapsed) .sidebar-nav a,
+    .sidebar:not(.collapsed) .logout-btn {
+        justify-content: flex-start;
+        padding: 0.75rem 1rem;
+    }
+
     .main-content {
-        margin-left: 70px;
+        margin-left: 50px;
         padding: 1rem;
     }
 
@@ -478,4 +511,10 @@ body {
     .avatar-icon-large {
         font-size: 2.5rem;
     }
+}
+
+label[required]::after {
+    content: '*';
+    color: var(--secondary-main); /* O cualquier color que prefieras para el asterisco */
+    margin-left: 5px;
 }
