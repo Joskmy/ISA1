@@ -572,6 +572,37 @@ body {
     background: var(--neutral-30);
 }
 
+
+/* ===== Modal Logout ===== */
+#logout-modal .modal-body {
+  padding: 1.5rem;
+}
+
+#logout-modal .modal-footer {
+  padding: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  border-top: 1px solid var(--neutral-30);
+}
+
+/* Botón de confirmar en rojo */
+.btn-danger {
+  background: var(--danger-main);
+  color: var(--neutral-10);
+  font-weight: var(--font-medium);
+  font-size: var(--font-body-md);
+  padding: var(--btn-padding-y) var(--btn-padding-x);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-danger:hover {
+  background: var(--danger-hover);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .sidebar {

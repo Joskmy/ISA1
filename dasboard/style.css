@@ -325,7 +325,7 @@ body {
 
 .stat-card.warning .stat-icon {
     background-color: var(--warning-bg);
-    color: var(--warning-main);
+    color: var(--neutral-100);
 }
 
 .stat-card.info .stat-icon {
@@ -490,7 +490,7 @@ body {
 .info-message {
     padding: 1rem 1.5rem;
     background-color: var(--warning-bg);
-    color: var(--warning-main);
+    color: var(--neutral-100);
     font-size: var(--font-body-sm);
 }
 
@@ -531,7 +531,7 @@ body {
 
 .badge.warning {
     background-color: var(--warning-bg);
-    color: var(--warning-main);
+    color: var(--neutral-100);
 }
 
 /* Indicadores de tendencia */
@@ -551,7 +551,124 @@ body {
     color: var(--neutral-70);
 }
 
+/* ===== Estilos base para modales ===== */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex; /* centra contenido */
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5); /* fondo oscuro */
+  z-index: 500; /* encima de todo */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
 
+/* Cuando está visible */
+.modal[aria-hidden="false"] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content {
+  background: var(--neutral-10);
+  border-radius: var(--radius-md);
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  animation: fadeInScale 0.3s ease;
+}
+
+/* Header y botones */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--neutral-30);
+}
+
+.modal-header h2 {
+  font-size: var(--font-header-sm);
+  font-weight: var(--font-semibold);
+  margin: 0;
+}
+
+.close-modal {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--neutral-70);
+}
+
+.close-modal:hover {
+  color: var(--danger-main);
+}
+
+/* Animación suave */
+@keyframes fadeInScale {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+
+/* ===== Modal Logout ===== */
+#logout-modal .modal-body {
+    padding: 1.5rem;
+}
+
+#logout-modal .modal-footer {
+    padding: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    border-top: 1px solid var(--neutral-30);
+}
+
+.btn-secondary {
+    background: var(--neutral-20);
+    color: var(--neutral-80);
+    font-weight: var(--font-medium);
+    font-size: var(--font-body-md);
+    padding: var(--btn-padding-y) var(--btn-padding-x);
+    border: 1px solid var(--neutral-40);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+    background: var(--neutral-30);
+}
+
+/* Botón de confirmar en rojo */
+.btn-danger {
+    background: var(--danger-main);
+    color: var(--neutral-10);
+    font-weight: var(--font-medium);
+    font-size: var(--font-body-md);
+    padding: var(--btn-padding-y) var(--btn-padding-x);
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-danger:hover {
+    background: var(--danger-hover);
+}
 
 /* Responsive */
 @media (max-width: 1024px) {

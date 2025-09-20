@@ -540,67 +540,6 @@ class InventoryDashboard {
         ctx.setAttribute('aria-label', chartDescription);
     }
 
-    handleLogout() {
-        if (this.isLoading) return;
-
-        const modal = document.getElementById('logout-modal');
-        const confirmBtn = document.getElementById('confirm-logout');
-        const cancelBtn = document.getElementById('cancel-logout');
-
-        if (!modal || !confirmBtn || !cancelBtn) {
-            console.error("Modal de logout o botones no encontrados en el DOM");
-            return;
-        }
-
-        // Mostrar modal
-        modal.removeAttribute('hidden');
-
-        // Enfocar el botón de confirmación para accesibilidad
-        confirmBtn.focus();
-
-        // Acción al confirmar
-        const confirmAction = () => {
-            cleanup();
-            modal.setAttribute('hidden', 'true');
-
-            showAlert(
-                "success",
-                "Sesión cerrada",
-                "Redirigiendo al login..."
-            );
-
-            // Simular redirección después de 2 segundos
-            setTimeout(() => {
-                window.location.href = "/index.html";
-            }, 2000);
-        };
-
-        // Acción al cancelar
-        const cancelAction = () => {
-            modal.setAttribute('hidden', 'true');
-            cleanup();
-        };
-
-        // Cerrar con ESC
-        const escHandler = (e) => {
-            if (e.key === "Escape") cancelAction();
-        };
-
-        // Limpieza de listeners
-        function cleanup() {
-            confirmBtn.removeEventListener('click', confirmAction);
-            cancelBtn.removeEventListener('click', cancelAction);
-            document.removeEventListener('keydown', escHandler);
-        }
-
-        // Listeners
-        confirmBtn.addEventListener('click', confirmAction);
-        cancelBtn.addEventListener('click', cancelAction);
-        document.addEventListener('keydown', escHandler);
-    }
-
-
-
     // Manejar botones de acción
     handleActionButton(event) {
         const button = event.currentTarget;
@@ -617,6 +556,9 @@ class InventoryDashboard {
                 this.goToInventory();
                 break;
             case 'Opciones del gráfico':
+                this.goToInventory();
+                break;
+            case 'Ver todos':
                 this.goToInventory();
                 break;
             default:
@@ -847,3 +789,23 @@ document.addEventListener('DOMContentLoaded', function() {
     styleSheet.textContent = dynamicStyles;
     document.head.appendChild(styleSheet);
 });
+
+    document.querySelector(".logout-btn").addEventListener("click", () => {
+    document.getElementById("logout-modal").setAttribute("aria-hidden", "false");
+    });
+
+    // Cerrar modal con la X o Cancelar
+    document.querySelector("#cancel-logout").addEventListener("click", closeLogoutModal);
+    document.querySelector("#logout-modal .close-modal").addEventListener("click", closeLogoutModal);
+
+    function closeLogoutModal() {
+    document.getElementById("logout-modal").setAttribute("aria-hidden", "true");
+    }
+
+    // Confirmar cierre de sesión
+    document.querySelector("#confirm-logout").addEventListener("click", () => {
+    // Aquí pones tu lógica de cerrar sesión
+    setTimeout(() => {
+        window.location.href = "../index.html";
+    }, 1000);
+    });

@@ -722,16 +722,6 @@ class InventoryApp {
         }
     }
 
-    // Manejar cierre de sesión
-    handleLogout() {
-        if (confirm('¿Estás seguro de que deseas cerrar sesión?\nSerás redirigido a la página de inicio de sesión.')) {
-            this.announce('Cerrando sesión');
-            setTimeout(() => {
-                window.location.href = '../index.html';
-            }, 1000);
-        }
-    }
-
     // Abrir modal de reporte
     openReportModal() {
         const modal = document.getElementById('report-modal');
@@ -950,17 +940,37 @@ class InventoryApp {
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
-}
-}
-
-// Inicializar la aplicación cuando el DOM esté cargado
-document.addEventListener('DOMContentLoaded', function() {
-    window.inventoryApp = new InventoryApp();
-
-    // Establecer foco en el contenido principal
-    const mainContent = document.getElementById('main-content');
-    if (mainContent) {
-        mainContent.focus();
     }
-});
+}
+
+    document.querySelector(".logout-btn").addEventListener("click", () => {
+    document.getElementById("logout-modal").setAttribute("aria-hidden", "false");
+    });
+
+    // Cerrar modal con la X o Cancelar
+    document.querySelector("#cancel-logout").addEventListener("click", closeLogoutModal);
+    document.querySelector("#logout-modal .close-modal").addEventListener("click", closeLogoutModal);
+
+    function closeLogoutModal() {
+    document.getElementById("logout-modal").setAttribute("aria-hidden", "true");
+    }
+
+    // Confirmar cierre de sesión
+    document.querySelector("#confirm-logout").addEventListener("click", () => {
+    // Aquí pones tu lógica de cerrar sesión
+    setTimeout(() => {
+        window.location.href = "../index.html";
+    }, 1000);
+    });
+
+    // Inicializar la aplicación cuando el DOM esté cargado
+    document.addEventListener('DOMContentLoaded', function() {
+        window.inventoryApp = new InventoryApp();
+
+        // Establecer foco en el contenido principal
+        const mainContent = document.getElementById('main-content');
+        if (mainContent) {
+            mainContent.focus();
+        }
+    });
 

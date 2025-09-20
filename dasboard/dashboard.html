@@ -204,7 +204,24 @@
         </div>
     </main>
     
+    <!-- Modal para cerrar sesión -->
+    <div id="logout-modal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="logout-title">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h2 id="logout-title">Cerrar sesión</h2>
+                <button class="close-modal" aria-label="Cerrar modal">&times;</button>
+            </header>
 
+            <div class="modal-body">
+                <p>¿Seguro que deseas cerrar sesión?</p>
+            </div>
+
+            <footer class="modal-footer">
+                <button id="cancel-logout" class="btn-secondary">Cancelar</button>
+                <button id="confirm-logout" class="btn-danger">Cerrar sesión</button>
+            </footer>
+        </div>
+    </div>
     
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" defer></script>
