@@ -571,7 +571,7 @@ class InventoryDashboard {
 
             // Simular redirección después de 2 segundos
             setTimeout(() => {
-                window.location.href = "/inicio/index.html";
+                window.location.href = "/index.html";
             }, 2000);
         };
 

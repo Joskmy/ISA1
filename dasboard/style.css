@@ -334,6 +334,7 @@ body {
 }
 
 .stat-info h3 {
+    text-align: left; /* Por defecto */
     font-size: var(--font-body-md);
     font-weight: var(--font-medium);
     color: var(--neutral-70);

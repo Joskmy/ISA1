@@ -68,7 +68,7 @@
                 <button class="stat-card success" aria-label="Ver total de productos en inventario">
                     <i class="bi bi-laptop stat-icon" aria-hidden="true"></i>
                     <div class="stat-info">
-                        <h3>Total Productos</h3>
+                        <h3>Total de Productos</h3>
                         <span class="stat-value">245</span>
                         <span class="stat-change positive">+12 desde ayer</span>
                     </div>
@@ -78,9 +78,9 @@
                 <button class="stat-card warning" aria-label="Ver productos con stock bajo en inventario">
                     <i class="bi bi-exclamation-triangle stat-icon" aria-hidden="true"></i>
                     <div class="stat-info">
-                        <h3>Stock Bajo</h3>
+                        <h3>Categorías en bajo stock</h3>
                         <span class="stat-value">12</span>
-                        <span class="stat-change negative">Necesitan atención</span>
+                        <span class="stat-change negative">Pendiente por reabastecer</span>
                     </div>
                 </button>
 
@@ -88,7 +88,7 @@
                 <button class="stat-card info" aria-label="Ver productos actualizados hoy en inventario">
                     <i class="bi bi-arrow-repeat stat-icon" aria-hidden="true"></i>
                     <div class="stat-info">
-                        <h3>Actualizados Hoy</h3>
+                        <h3>Productos actualizados hoy</h3>
                         <span class="stat-value">8</span>
                         <span class="stat-change primary">Productos modificados</span>
                     </div>
@@ -104,11 +104,6 @@
             <section class="card chart-card" aria-labelledby="inventory-status-heading">
                 <header class="card-header">
                     <h2 id="inventory-status-heading">Estado del Inventario</h2>
-                    <div class="card-actions">
-                        <button class="action-btn primary" aria-label="Opciones del gráfico">
-                            <i class="bi bi-three-dots" aria-hidden="true"></i>
-                        </button>
-                    </div>
                 </header>
                 <figure class="chart-container">
                     <canvas id="inventoryStatusChart" aria-label="Gráfico de estado de inventario" role="img"></canvas>
@@ -152,9 +147,9 @@
                 <header class="card-header">
                     <h2 id="low-stock-heading">Productos con stock bajo</h2>
                     <div class="card-actions">
-                        <button class="action-btn primary" aria-label="Gestionar alertas de stock">
-                            <i class="bi bi-gear" aria-hidden="true"></i>
-                            Gestionar
+                        <button class="action-btn primary" aria-label="Ver todos los productos">
+                            <i class="bi bi-eye" aria-hidden="true"></i>
+                            Ver todos
                         </button>
                     </div>
                 </header>
@@ -184,9 +179,9 @@
                 <header class="card-header">
                     <h2 id="top-products-heading">Productos más movidos</h2>
                     <div class="card-actions">
-                        <button class="action-btn primary" aria-label="Ver estadísticas completas">
-                            <i class="bi bi-bar-chart" aria-hidden="true"></i>
-                            Ver más
+                        <button class="action-btn primary" aria-label="Ver todos los productos">
+                            <i class="bi bi-eye" aria-hidden="true"></i>
+                            Ver todos
                         </button>
                     </div>
                 </header>

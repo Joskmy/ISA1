@@ -1,3 +1,4 @@
+
 // Datos de ejemplo para productos
 const sampleProducts = [
     { id: 1, name: "Laptop Dell XPS 13", category: "Computadoras", stock: 15, price: 2500000, status: "Disponible", dateAdded: "2023-09-01" },
@@ -18,6 +19,44 @@ const sampleProducts = [
 ];
 
 
+/**
+ * Muestra una alerta con el tipo, título y mensaje especificados
+ * @param {string} type - Tipo de alerta: 'success', 'danger', 'warning', 'info'
+ * @param {string} title - Título de la alerta
+ * @param {string} message - Mensaje de la alerta
+ * @param {boolean} persistent - Si es true, la alerta no se cierra automáticamente
+ * @param {number} duration - Duración en milisegundos antes de auto-cerrar (por defecto 4000ms)
+ */
+function showAlert(type, title, message, duration = 3000) {
+  const container = document.getElementById("alert-container");
+
+  // Crear alerta
+  const alert = document.createElement("div");
+  alert.className = `alert ${type}`;
+  alert.innerHTML = `
+    <div class="icon"></div>
+    <div class="content">
+      <p class="title">${title}</p>
+      <p class="message">${message}</p>
+    </div>
+    <button class="close-btn" aria-label="Cerrar alerta">&times;</button>
+  `;
+
+  // Botón de cerrar manual
+  alert.querySelector(".close-btn").addEventListener("click", () => {
+    alert.remove();
+  });
+
+  // Insertar en el contenedor
+  container.appendChild(alert);
+
+  // Autocierre después del tiempo indicado
+  if (duration > 0) {
+    setTimeout(() => {
+      alert.remove();
+    }, duration);
+  }
+}
 
 
 // Clase principal de la aplicación de inventario
@@ -273,6 +312,13 @@ class InventoryApp {
                 paging: true,       // activa la paginación
                 info: false,         // muestra "Mostrando 1 a 10 de X registros"
                 searching: false,   // quita la caja de búsqueda
+                dom: 'tip',
+                columnDefs: [
+                    { targets: 2, className: "dt-right" }, // Stock
+                    { targets: 3, className: "dt-right" },  // Precio
+                    { targets: 4, className: "dt-center" }  // Precio
+
+                ]
             });
         }
     }
@@ -450,7 +496,12 @@ class InventoryApp {
         this.saveProducts();
         this.filterProducts();
         this.initCharts();
-        this.announce(`Producto "${newProduct.name}" agregado correctamente`);
+        showAlert(
+            "success", 
+            "¡Producto creado!", 
+            `El producto "${newProduct.name}" se ha agregado correctamente.`,
+            3000
+        );
     }
 
     // Actualizar producto
@@ -461,7 +512,12 @@ class InventoryApp {
             this.saveProducts();
             this.filterProducts();
             this.initCharts();
-            this.announce(`Producto "${productData.name}" actualizado correctamente`);
+            showAlert(
+                "info", 
+                "¡Producto actualizado!", 
+                `El producto "${productData.name}" se ha actualizado correctamente.`,
+                3000
+            );
         }
     }
 
@@ -666,7 +722,7 @@ class InventoryApp {
         if (confirm('¿Estás seguro de que deseas cerrar sesión?\nSerás redirigido a la página de inicio de sesión.')) {
             this.announce('Cerrando sesión');
             setTimeout(() => {
-                window.location.href = '../inicio/index.html';
+                window.location.href = '../index.html';
             }, 1000);
         }
     }

@@ -24,6 +24,136 @@ body {
     border: 0;
 }
 
+/* ===== Contenedor de alertas ===== */
+#alert-container {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  z-index: 1000;
+  max-width: 400px;
+}
+
+/* ===== Sistema de Alertas ===== */
+.alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem;
+    border-radius: var(--radius-sm);
+    font-size: var(--font-body-md);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    position: relative;
+    min-width: 320px;
+    max-width: 380px;
+    border-width: 1px;
+    border-style: solid;
+    animation: slideIn 0.3s ease-out;
+    box-sizing: border-box;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.alert .icon {
+  font-size: 1.25rem;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.alert .content {
+  flex: 1;
+  min-width: 0;
+}
+
+.alert .title {
+  font-weight: var(--font-semibold);
+  margin: 0 0 0.25rem 0;
+  line-height: 1.3;
+}
+
+.alert .message {
+  margin: 0;
+  line-height: 1.4;
+  opacity: 0.9;
+}
+
+.alert .close-btn {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    transition: background-color 0.2s ease;
+    color: var(--neutral-100); /* Forzar color negro para el botón X */
+    flex-shrink: 0;
+    margin-left: 0.5rem;
+}
+
+.alert .close-btn:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Variantes de alertas */
+.alert.danger {
+  background-color: var(--danger-bg);
+  border-color: var(--danger-border);
+  color: var(--danger-main);
+}
+
+.alert.danger .icon::before {
+  content: "⚠";
+}
+
+.alert.success {
+  background-color: var(--success-bg);
+  border-color: var(--success-border);
+  color: var(--success-main);
+}
+
+.alert.success .icon::before {
+  content: "✓";
+}
+
+.alert.warning {
+  background-color: var(--warning-bg);
+  border-color: var(--warning-border);
+  color: var(--warning-main);
+}
+
+.alert.warning .icon::before {
+  content: "⚠";
+}
+
+.alert.info {
+  background-color: var(--info-bg);
+  border-color: var(--info-border);
+  color: var(--info-main);
+}
+
+.alert.info .icon::before {
+  content: "ⓘ";
+  color: var(--info-main); /* Icono en color de información */
+}
+
+
 /* Contenedor principal del inventario */
 .inventory-container {
     display: flex;
@@ -341,35 +471,72 @@ body {
 }
 
 /* Filtros en cuadrícula */
+/* --- AÑADE ESTE NUEVO BLOQUE --- */
+
+/* 1. Estilos para la tarjeta de filtros */
 .filters {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
+    background-color: var(--neutral-10); /* Fondo blanco de tu sistema */
+    padding: 24px;
+    border-radius: 8px; /* Un poco más redondeado para el estilo tarjeta */
+    box-shadow: 0 4px 12px var(--neutral-50);
+    border: 1px solid var(--neutral-30);
+    margin-bottom: 1rem;
+    
+    /* 2. Distribución con Flexbox */
+    display: flex;
+    flex-wrap: wrap; /* Permite que los filtros se reorganicen en pantallas pequeñas */
+    gap: 20px;
+    align-items: flex-end; /* Alinea todos los campos por la base */
 }
 
+/* 3. Estilos para cada grupo (label + input) */
 .filter-group {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 0.5rem;
-    min-width: 150px;
-    flex-shrink: 0;
+    flex-direction: column; /* Etiqueta arriba del campo */
+    flex-grow: 1; /* Permite que los grupos crezcan y ocupen espacio */
+    min-width: 180px; /* Ancho mínimo para cada filtro */
 }
 
+/* El campo de búsqueda puede ser más ancho */
+.filter-group:first-child {
+    min-width: 250px;
+}
 
+/* El grupo del botón "Limpiar" no necesita crecer tanto */
+.filter-group:last-child {
+    flex-grow: 0;
+}
+
+/* 4. Estilos para etiquetas y campos */
 .filter-group label {
     font-size: var(--font-body-sm);
     font-weight: var(--font-medium);
     color: var(--neutral-90);
-    min-width: 70px;
-    white-space: nowrap;
+    margin-bottom: 8px; /* Espacio entre la etiqueta y el campo */
 }
 
-#search-input, #category-filter, #status-filter, #date-from, #date-to {
-    padding: 0.5rem;
+.filters input,
+.filters select {
+    width: 100%; /* Asegura que ocupe todo el espacio del .filter-group */
+    height: 40px;
+    padding: 0 12px;
+    font-size: var(--font-body-md);
     border: 1px solid var(--neutral-40);
     border-radius: var(--radius-sm);
-    font-size: var(--font-body-md);
+    transition: all 0.2s ease-in-out;
+}
+
+.filters input:focus,
+.filters select:focus {
+    outline: none;
+    border-color: var(--primary-main);
+    box-shadow: 0 0 0 2px var(--primary-bg);
+}
+
+/* Ajuste para que el botón Limpiar se alinee correctamente */
+.filters .btn-secondary {
+    width: 100%;
+    height: 40px;
 }
 
 /* Tabla de productos */
@@ -380,7 +547,7 @@ body {
 }
 
 .data-table thead th {
-    background-color: var(--neutral-20);
+    background-color: var(--neutral-30);
     font-weight: var(--font-semibold);
     font-size: var(--font-body-sm);
     color: var(--neutral-90);
@@ -527,6 +694,7 @@ body {
 }
 
 .modal-content {
+    padding: 20px;  /* margen interno en todos los lados */
     background-color: var(--neutral-10);
     border-radius: 8px;
     width: 90%;
@@ -704,10 +872,6 @@ body {
         flex-direction: column; /* botones uno debajo de otro */
     }
 
-    .filters {
-        grid-template-columns: 1fr; /* filtros en una sola columna */
-    }
-
     .report-card {
         max-width: 100%;  /* usa todo el ancho */
         margin: 0 auto;        /* elimina centrado forzado */
@@ -728,3 +892,72 @@ label[required]::after {
     color: var(--secondary-main); /* O cualquier color que prefieras para el asterisco */
     margin-left: 5px;
 }
+
+/* 🎨 Estilos base para todos los inputs, selects y textareas en modales */
+.modal input[type="text"],
+.modal input[type="email"],
+.modal input[type="number"],
+.modal input[type="date"],
+.modal select,
+.modal textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s ease-in-out;
+    background-color: #fff;
+}
+
+/* ✨ Estilo al recibir foco (clic o tab) */
+.modal input[type="text"]:focus,
+.modal input[type="email"]:focus,
+.modal input[type="number"]:focus,
+.modal input[type="date"]:focus,
+.modal select:focus,
+.modal textarea:focus {
+    border-color: #0d6efd; /* azul bootstrap */
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+/* Opcional: mejorar accesibilidad para inputs deshabilitados */
+.modal input:disabled,
+.modal select:disabled,
+.modal textarea:disabled {
+    background-color: #f8f9fa;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* --- ESTILOS CLAVE (ACTUALIZADOS) --- */
+
+/* Contenedor del input y el prefijo */
+.input-group {
+  position: relative;
+}
+
+/* Estilos del prefijo "COP" (sin cambios) */
+.input-prefix {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+    pointer-events: none;
+}
+
+/* Estilos del input */
+#product-price {
+    /* CAMBIO: Ancho completo */
+    width: 100%; 
+    
+    /* AÑADIDO: Para que el padding y borde no afecten el ancho total */
+    box-sizing: border-box; 
+
+    /* Estilos anteriores (sin cambios) */
+    padding-left: 55px; 
+    height: 40px;
+
+}
+

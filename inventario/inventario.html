@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.dataTables.min.css">
 </head>
 <body>
+    <!-- Contenedor de alertas -->
+    <div id="alert-container"></div>
 
     <!-- Barra lateral -->
     <aside class="sidebar" aria-label="Navegación principal">
@@ -23,14 +25,14 @@
 
         <nav class="sidebar-nav" aria-label="Navegación principal">
             <ul>
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a href="../dasboard/dashboard.html" aria-label="Ir al Dashboard">
                         <i class="bi bi-speedometer2 icon" aria-hidden="true"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a href=".#" aria-label="Ir al Inventario">
                         <i class="bi bi-box-seam icon" aria-hidden="true"></i>
                         <span>Inventario</span>
@@ -200,8 +202,12 @@
                 </div>
                 <div class="form-group">
                     <label for="product-price" required>Precio Unitario</label>
-                    <input type="number" id="product-price" name="price" min="0" step="0.01" placeholder="0"required>
+                    <div class="input-group">
+                        <span class="input-prefix">COP</span>
+                        <input type="number" id="product-price" name="price" min="0" step="0.01" placeholder="0" required>
+                    </div>
                 </div>
+
                 <div class="form-actions">
                     <button type="button" class="btn-secondary" id="cancel-btn">Cancelar</button>
                     <button type="submit" class="btn-primary">Guardar</button>
@@ -241,6 +247,7 @@
                     <button type="submit" class="btn-primary">Generar Reporte</button>
                 </div>
             </form>
+
         </div>
     </div>
 

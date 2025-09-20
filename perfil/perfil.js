@@ -1,3 +1,43 @@
+/**
+ * Muestra una alerta con el tipo, título y mensaje especificados
+ * @param {string} type - Tipo de alerta: 'success', 'danger', 'warning', 'info'
+ * @param {string} title - Título de la alerta
+ * @param {string} message - Mensaje de la alerta
+ * @param {boolean} persistent - Si es true, la alerta no se cierra automáticamente
+ * @param {number} duration - Duración en milisegundos antes de auto-cerrar (por defecto 4000ms)
+ */
+function showAlert(type, title, message, duration = 3000) {
+  const container = document.getElementById("alert-container");
+
+  // Crear alerta
+  const alert = document.createElement("div");
+  alert.className = `alert ${type}`;
+  alert.innerHTML = `
+    <div class="icon"></div>
+    <div class="content">
+      <p class="title">${title}</p>
+      <p class="message">${message}</p>
+    </div>
+    <button class="close-btn" aria-label="Cerrar alerta">&times;</button>
+  `;
+
+  // Botón de cerrar manual
+  alert.querySelector(".close-btn").addEventListener("click", () => {
+    alert.remove();
+  });
+
+  // Insertar en el contenedor
+  container.appendChild(alert);
+
+  // Autocierre después del tiempo indicado
+  if (duration > 0) {
+    setTimeout(() => {
+      alert.remove();
+    }, duration);
+  }
+}
+
+
 // Clase principal de la aplicación de perfil
 class ProfileApp {
     constructor() {
@@ -199,7 +239,14 @@ class ProfileApp {
         this.updateGreeting(profileData.name);
         this.closeProfileModal();
 
-        this.announce('Perfil actualizado correctamente');
+        this.announce();
+
+        showAlert(
+            "info", 
+            "¡Perfil actualizado!", 
+            `Perfil actualizado correctamente`,
+            3000
+        );
     }
 
     // Mostrar la fecha actual
@@ -265,7 +312,7 @@ class ProfileApp {
         if (confirm('¿Estás seguro de que deseas cerrar sesión?\nSerás redirigido a la página de inicio de sesión.')) {
             this.announce('Cerrando sesión');
             setTimeout(() => {
-                window.location.href = '../inicio/index.html';
+                window.location.href = '../index.html';
             }, 1000);
         }
     }
