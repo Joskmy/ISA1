@@ -528,14 +528,19 @@ class InventoryApp {
 
     // Eliminar producto
     deleteProduct(id) {
-        if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
+        if (confirm('¿Quieres eliminar este producto?')) {
             const product = this.products.find(p => p.id === id);
             this.products = this.products.filter(p => p.id !== id);
             this.saveProducts();
             this.filterProducts();
             this.initCharts();
             if (product) {
-                this.announce(`Producto "${product.name}" eliminado`);
+                showAlert(
+                    "danger", 
+                    "¡Producto eliminado!", 
+                    `El producto se ha eliminado.`,
+                    3000
+                );
             }
         }
     }
